@@ -3,11 +3,14 @@
 
 	$inData = getRequestInfo();
 
+	$login = $inData["login"];
+	$password = $inData["password"];
+
 	$id = 0;
 	$firstName = "";
 	$lastName = "";
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 							// To be changed with database info
+	$conn = new mysqli("localhost", "root", "cop43312", "COP4331");
 	if( $conn->connect_error )
 	{
 		returnWithError( $conn->connect_error );
