@@ -10,9 +10,9 @@
 	$lastName = "";
 
 	$conn = new mysqli("localhost", "root", "cop43312", "COP4331");
-	if( $conn->connect_error )
+	if( $conn->connect_error)
 	{
-		returnWithError( $conn->connect_error );
+		returnWithError( $conn->connect_error);
 	}
 	else
 	{
