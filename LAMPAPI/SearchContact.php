@@ -13,8 +13,8 @@
 	else
 	{
 		$stmt = $conn->prepare("SELECT Name from Contacts where Name=? and UserID=?");
-		$contactName = "%" . $inData["search"] . "%";
-		$stmt->bind_param("ss", $contactName, $inData["userId"]);
+		$contactName = "%" . $inData["Name"] . "%";
+		$stmt->bind_param("ss", $contactName, $inData["UserID"]);
 		$stmt->execute();
 
 		$result = $stmt->get_result();
