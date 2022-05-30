@@ -32,7 +32,7 @@
 		else
 		{
 		$stmt = $conn->prepare("INSERT into Contacts (Name, Phone, email, City, State, ZIP, Country, UserID ) VALUES(?,?,?,?,?,?,?,?)");
-		$stmt->bind_param("sisssisi", $Name, $Phone, $email, $City, $State, $ZIP, $Country, $UserID);
+		$stmt->bind_param("sssssisi", $Name, $Phone, $email, $City, $State, $ZIP, $Country, $UserID);
 		$stmt->execute();
 		$stmt->close();
 		$conn->close();
