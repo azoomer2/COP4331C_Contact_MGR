@@ -12,11 +12,19 @@
 	}
 	else
 	{
-		$stmt = $conn->prepare("SELECT Name from Contacts where Name=? and UserID=?");
-		$contactName = "%" . $inData["Name"] . "%";
-		$stmt->bind_param("ss", $contactName, $inData["UserID"]);
-		$stmt->execute();
+		// If input is empty string, display first 10 contacts
+		if ($inData["search"] == "")
+		{
+			$stmt = $conn->prepare("SELECT * from Contacts WHERE UserID=? ORDER BY ID LIMIT 10;");
+			$stmt->bind_param("i", $UserID);
+		}
+		else
+		{
+			$stmt = $conn->prepare("SELECT Name, Phone, email, City, State, ZIP, Country, UserID FROM Contacts WHERE (Name=? OR Phone=? OR PhoneNumber=? OR email=? OR City=? OR State=? OR ZIP=? OR Country=?) AND (UserID=?)");
+			$stmt->bind_param("sssssisi", $Name, $Phone, $email, $City, $State, $ZIP, $Country, $UserID);
+		}
 
+		$stmt->execute();
 		$result = $stmt->get_result();
 
 		while($row = $result->fetch_assoc())
@@ -26,7 +34,13 @@
 				$searchResults .= ",";
 			}
 			$searchCount++;
-			$searchResults .= '{"Name": "' . $row["Name"] . '", "Phone": "' . $row["Phone"] . '", "email": "' . $row["email"] . '", "City": "' . $row["City"] . '", "State": "' . $row["State"] . '", "ZIP": "' . $row["ZIP"] . '", "Country": "' . $row["Country"] . '", "UserID": "' . $row["UserID"] . '"}';
+			$searchResults .= '{' . '"Name": ' . '"' . $row["Name"] . '",';
+			$searchResults .= '"Phone": ' . '"' . $row["Phone"] . '",';
+			$searchResults .= '"email": ' . '"' . $row["email"] . '",';
+			$searchResults .= '"City": ' . '"' . $row["City"] . '",';
+			$searchResults .= '"State": ' . $row["State"] . '}';
+			$searchResults .= '"ZIP": ' . $row["ZIP"] . '}';
+			$searchResults .= '"Country": ' . $row["Country"] . '}';
 		}
 
 		if( $searchCount == 0 )
