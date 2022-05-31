@@ -1,0 +1,220 @@
+swagger: '2.0'
+info:
+  description: This is the API documentation for the COP 4331 Demo Contact App
+  version: 1.0.0
+  title: UCF Contact App
+  # put the contact info for your development or API team
+  contact:
+    email: leoalepuz@knights.ucf.edu
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+
+paths:
+  /Login.php:
+    post:
+      tags:
+      - Users
+      summary: Logs in to the contact app
+      operationId: doLogin
+      description: Logs in to contact app
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: loginItem
+        description: login
+        schema:
+          $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+
+  /AddContact.php:
+    post:
+      tags:
+      - Add
+      summary: Adds a contact
+      operationId: addContact
+      description: Adds a contact to the contact app database
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: addItem
+        description: Add
+        schema:
+          $ref: '#/definitions/AddContact'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+
+  /Register.php:
+    post:
+      tags:
+      - Register
+      summary: Registers a new user
+      operationId: Register
+      description: Registers a new user to the user database
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: registerItem
+        description: Register
+        schema:
+          $ref: '#/definitions/Register'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+
+  /SearchContact.php:
+    post:
+      tags:
+      - Search
+      summary: Searchs a contact
+      operationId: searchContact
+      description: Searchs a contact on the contact app database
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: searchItem
+        description: Search
+        schema:
+          $ref: '#/definitions/Search'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+
+definitions:
+  Login:
+    type: object
+    required:
+    - login
+    - password
+    properties:
+      login:
+        type: string
+        example: "RickL"
+      password:
+        type: string
+        example: "COP4331"
+
+  AddContact:
+    type: object
+    required:
+    - Name
+    - Phone
+    - email
+    - City
+    - State
+    - ZIP
+    - Country
+    - UserID
+    properties:
+      Name:
+        type: string
+        example: "Leo"
+      Phone:
+        type: string
+        example: "786-597-3541"
+      email:
+        type: string
+        example: "leoag96@gmail.com"
+      City:
+        type: string
+        example: "Orlando"
+      State:
+        type: string
+        example: "FL"
+      ZIP:
+        type: integer
+        example: 32826
+      Country:
+        type: string
+        example: "USA"
+      UserID:
+        type: integer
+        example: 1
+
+  Register:
+    type: object
+    required:
+    - FirstName
+    - LastName
+    - Login
+    - Password
+    properties:
+      FirstName:
+        type: string
+        example: "Leo"
+      LastName:
+        type: string
+        example: "Alepuz"
+      Login:
+        type: string
+        example: "LeoA"
+      Password:
+        type: string
+        example: "Orlando"
+
+  Search:
+    type: object
+    required:
+    - Name
+    - Phone
+    - email
+    - City
+    - State
+    - ZIP
+    - Country
+    - UserID
+    properties:
+      Name:
+        type: string
+        example: "Carly"
+      Phone:
+        type: string
+        example: ""
+      email:
+        type: string
+        example: "carly@gmail.com"
+      City:
+        type: string
+        example: ""
+      State:
+        type: string
+        example: ""
+      ZIP:
+        type: integer
+        example: 8080
+      Country:
+        type: string
+        example: ""
+      UserID:
+        type: integer
+        example: 1
+
+host: cop4331c-group2.me
+basePath: /LAMPAPI
+schemes:
+- http
