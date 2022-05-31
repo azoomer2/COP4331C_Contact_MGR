@@ -12,17 +12,8 @@
 	}
 	else
 	{
-		// If input is empty string, display first 10 contacts
-		if ($inData["search"] == "")
-		{
-			$stmt = $conn->prepare("SELECT * from Contacts WHERE UserID=? ORDER BY ID LIMIT 10;");
-			$stmt->bind_param("i", $UserID);
-		}
-		else
-		{
-			$stmt = $conn->prepare("SELECT Name, Phone, email, City, State, ZIP, Country, UserID FROM Contacts WHERE (Name=? OR Phone=? OR PhoneNumber=? OR email=? OR City=? OR State=? OR ZIP=? OR Country=?) AND (UserID=?)");
-			$stmt->bind_param("sssssisi", $Name, $Phone, $email, $City, $State, $ZIP, $Country, $UserID);
-		}
+		$stmt = $conn->prepare("SELECT Name, Phone, email, City, State, ZIP, Country, UserID FROM Contacts WHERE (Name=? OR Phone=? OR PhoneNumber=? OR email=? OR City=? OR State=? OR ZIP=? OR Country=?) AND (UserID=?)");
+		$stmt->bind_param("sssssisi", $Name, $Phone, $email, $City, $State, $ZIP, $Country, $UserID);
 
 		$stmt->execute();
 		$result = $stmt->get_result();
