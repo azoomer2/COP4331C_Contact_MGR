@@ -12,10 +12,11 @@
 	}
 	else
 	{
-		$stmt = $conn->prepare("SELECT Name, Phone, email, City, State, ZIP, Country, UserID FROM Contacts WHERE (Name=? OR Phone=? OR PhoneNumber=? OR email=? OR Street=? OR City=? OR State=? OR ZIP=? OR Country=?) AND (UserID=?)");
-		$stmt->bind_param("sssssisi", $Name, $Phone, $email, $Street, $City, $State, $ZIP, $Country, $UserID);
-
+		$stmt = $conn->prepare("SELECT * FROM Contacts where Name like ? and UserID=?");
+		$contactName = "%" . $inData["search"] . "%";
+		$stmt->bind_param("ss", $contactName, $inData["UserID"]);
 		$stmt->execute();
+
 		$result = $stmt->get_result();
 
 		while($row = $result->fetch_assoc())
@@ -25,14 +26,7 @@
 				$searchResults .= ",";
 			}
 			$searchCount++;
-			$searchResults .= '{' . '"Name": ' . '"' . $row["Name"] . '",';
-			$searchResults .= '"Phone": ' . '"' . $row["Phone"] . '",';
-			$searchResults .= '"email": ' . '"' . $row["email"] . '",';
-			$searchResults .= '"Street": ' . '"' . $row["Street"] . '",';
-			$searchResults .= '"City": ' . '"' . $row["City"] . '",';
-			$searchResults .= '"State": ' . $row["State"] . '}';
-			$searchResults .= '"ZIP": ' . $row["ZIP"] . '}';
-			$searchResults .= '"Country": ' . $row["Country"] . '}';
+			$searchResults .= '{"Name": "' . $row["Name"]. '", "Phone": "' . $row["Phone"]. '", "email": "' . $row["email"]. '", "Street": "' . $row["Street"]. '", "City": "' . $row["City"]. '", "State": "' . $row["State"]. '", "ZIP": "' . $row["ZIP"]. '", "Country": "' . $row["Country"]. '"}';
 		}
 
 		if( $searchCount == 0 )
