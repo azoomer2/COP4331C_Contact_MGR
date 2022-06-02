@@ -21,7 +21,7 @@ function doLogin()
 //	var tmp = {login:login,password:hash};
 	let jsonPayload = JSON.stringify( tmp );
 
-	let url = urlBase + '/Login.' + extension;
+	let url = urlBase + '/LAMPAPI/Login.' + extension;
 	console.log(url);
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
