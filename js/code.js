@@ -1,4 +1,4 @@
-const urlBase = 'http://cop4331c-group2.me';
+const urlBase = '143.198.102.67';
 const extension = 'php';
 
 let userId = 0;
@@ -22,7 +22,7 @@ function doLogin()
 	let jsonPayload = JSON.stringify( tmp );
 
 	let url = urlBase + '/Login.' + extension;
-
+	console.log(url);
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -34,7 +34,7 @@ function doLogin()
 			{
 				let jsonObject = JSON.parse( xhr.responseText );
 				userId = jsonObject.id;
-
+				console.log("userID:", userId);
 				if( userId < 1 )
 				{
 					document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
@@ -42,10 +42,10 @@ function doLogin()
 				}
 
 				firstName = jsonObject.firstName;
-				lastName = jsonObject.lastName;
+				lastName = jsonObjxect.lastName;
 
 				saveCookie();
-
+				console.log("cookie saved");
 				window.location.href = "contacts.html";
 			}
 		};
