@@ -43,7 +43,7 @@ function doLogin()
 				}
 
 				firstName = jsonObject.firstName;
-				lastName = jsonObjxect.lastName;
+				lastName = jsonObject.lastName;
 
 				saveCookie();
 				console.log("cookie saved");
