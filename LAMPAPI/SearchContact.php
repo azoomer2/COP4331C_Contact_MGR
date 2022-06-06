@@ -26,7 +26,7 @@
 				$searchResults .= ",";
 			}
 			$searchCount++;
-			$searchResults .= '{"Name": "' . $row["Name"]. '", "Phone": "' . $row["Phone"]. '", "email": "' . $row["email"]. '", "Street": "' . $row["Street"]. '", "City": "' . $row["City"]. '", "State": "' . $row["State"]. '", "ZIP": "' . $row["ZIP"]. '", "Country": "' . $row["Country"]. '"}';
+			$searchResults .= '{"Name": "' . $row["Name"]. '", "Phone": "' . $row["Phone"]. '", "email": "' . $row["email"]. '", "Street": "' . $row["Street"]. '", "City": "' . $row["City"]. '", "State": "' . $row["State"]. '", "ZIP": "' . $row["ZIP"]. '", "Country": "' . $row["Country"]. '", "office": "' . $row["office"]. '"}';
 		}
 
 		if( $searchCount == 0 )

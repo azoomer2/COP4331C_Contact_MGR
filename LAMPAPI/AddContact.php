@@ -31,8 +31,8 @@
 		# Insert contact
 		else
 		{
-		$stmt = $conn->prepare("INSERT into Contacts (Name, Phone, email, City, State, ZIP, Country, UserID ) VALUES(?,?,?,?,?,?,?,?)");
-		$stmt->bind_param("sssssisi", $Name, $Phone, $email, $City, $State, $ZIP, $Country, $UserID);
+		$stmt = $conn->prepare("INSERT into Contacts (Name, Phone, email, City, State, ZIP, Country, UserID ) VALUES(?,?,?,?,?,?,?,?,?)");
+		$stmt->bind_param("sssssissi", $Name, $Phone, $email, $City, $State, $ZIP, $Country, $office, $UserID);
 		$stmt->execute();
 		$stmt->close();
 		$conn->close();
