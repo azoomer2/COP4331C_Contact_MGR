@@ -1,40 +1,231 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<title>COP 4331 LAMP Stack Demo</title>
-	<script type="text/javascript" src="js/code.js"></script>
-    <link href="css/styles.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-
-	<script type="text/javascript">
-	document.addEventListener('DOMContentLoaded', function()
-	{
-		readCookie();
-	}, false);
-	</script>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>UCF_Contacts_Manager</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/Black-Navbar.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
+
 <body>
-
-<h1 id="title">COP 4331 LAMP Stack Demo</h1>
-
-<div id="loggedInDiv">
-	<span id="userName"></span><br />
-	<button type="button" id="logoutButton" class="buttons" onclick="doLogout();"> Log Out </button>
-</div>
-
-<div id="accessUIDiv">
-	<br />
-
-	<input type="text" id="searchText" placeholder="Contact To Search For"/>
-	<button type="button" id="searchContactButton" class="buttons" onclick="searchContact();"> Search Contact </button><br />
-	<span id="contactSearchResult"></span>
-	<p id="contactList">
-	</p><br /><br />
-
-	<input type="text" id="contactText" placeholder="Contact To Add">
-	<button type="button" id="addContactButton" class="buttons" onclick="addContact();"> Add Contact </button><br />
-	<span id="contactAddResult"></span>
-</div>
-
+    <nav class="navbar navbar-light navbar-expand-md navbar-fixed-top navigation-clean-button" style="background: var(--ucf-gray);border-radius: 20;border-top-left-radius: 20;border-top-right-radius: 20;border-bottom-right-radius: 20;border-bottom-left-radius: 20;border-style: none;padding-top: 0;padding-bottom: 10px;">
+        <div class="container"><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div><a class="navbar-brand" href="#"><img class="img-fluid" src="assets/img/UCF_Seal_Transparent.png"> </a></div>
+            <div class="collapse navbar-collapse" id="navcol-1" style="color: rgb(255,255,255);">
+                <ul class="navbar-nav nav-right">
+                    <li class="nav-item"><a class="nav-link active fst-italic" style="color: rgba(224,217,217,0.9);">my contacts</a></li>
+                    <li class="nav-item"></li>
+                    <li class="nav-item"></li>
+                </ul>
+                <ul class="navbar-nav nav-right">
+                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link fs-1 fw-bold" href="contacts.html" style="color: var(--bs-white);">UCF Contact Manager</a></li>
+                    <li class="nav-item"></li>
+                </ul>
+                <p class="ms-auto navbar-text actions"></p><button class="btn btn-danger rounded-3" type="button">Sign Out</button>
+            </div>
+        </div>
+    </nav>
+    <div id="searchPane" class="round-3">
+        <p></p>
+        <div class="container-fluid text-center py-3">
+            <div class="row g-0 justify-content-center align-items-center">
+                <div class="col"><input class="bg-dark w-75" type="text" style="--bs-dark: #b3b3b3;--bs-dark-rgb: 179,179,179;"></div>
+                <div class="col-3 text-center"><a class="btn btn-primary btn-lg w-100" role="button" href="#">Search</a></div>
+            </div>
+        </div>
+    </div>
+    <div id="contactsPane" class="p-5 mb-4 round-3 pt-3">
+        <div class="container-fluid container py-3">
+            <div class="row contactRow">
+                <div class="col">
+                    <p class="text-center contactRowContent">Full Name, cool guy</p>
+                </div>
+                <div class="col"><a class="text-break text-center" href="mailto:email@mail.ucf.edu">
+                        <p class="text-center contactRowContent">email@mail.ucf.edu</p>
+                    </a></div>
+                <div class="col align-self-center align-middle">
+                    <p class="text-center contactRowContent">L3Harris O204</p>
+                </div>
+                <div class="col text-center align-self-center align-middle">
+                    <div class="btn-group btn-group-sm" role="group"><button class="btn btn-primary contactAction" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" class="editIcon">
+                                <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
+                                <path d="M421.7 220.3L188.5 453.4L154.6 419.5L158.1 416H112C103.2 416 96 408.8 96 400V353.9L92.51 357.4C87.78 362.2 84.31 368 82.42 374.4L59.44 452.6L137.6 429.6C143.1 427.7 149.8 424.2 154.6 419.5L188.5 453.4C178.1 463.8 165.2 471.5 151.1 475.6L30.77 511C22.35 513.5 13.24 511.2 7.03 504.1C.8198 498.8-1.502 489.7 .976 481.2L36.37 360.9C40.53 346.8 48.16 333.9 58.57 323.5L291.7 90.34L421.7 220.3zM492.7 58.75C517.7 83.74 517.7 124.3 492.7 149.3L444.3 197.7L314.3 67.72L362.7 19.32C387.7-5.678 428.3-5.678 453.3 19.32L492.7 58.75z"></path>
+                            </svg><label class="form-label">Edit</label></button><button class="btn btn-primary contactAction" type="button"><i class="fas fa-info-circle editIcon"></i><label class="form-label">More Info</label></button></div>
+                </div>
+            </div>
+            <div class="row contactRow">
+                <div class="col">
+                    <div class="row contactRow">
+                        <div class="col">
+                            <p class="text-center contactRowContent">Full Name, cool guy</p>
+                        </div>
+                        <div class="col"><a class="text-break text-center" href="mailto:email@mail.ucf.edu">
+                                <p class="text-center contactRowContent">email@mail.ucf.edu</p>
+                            </a></div>
+                        <div class="col align-self-center align-middle">
+                            <p class="text-center contactRowContent">L3Harris O204</p>
+                        </div>
+                        <div class="col text-center align-self-center align-middle">
+                            <div class="btn-group btn-group-sm" role="group"><button class="btn btn-primary contactAction" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" class="editIcon">
+                                        <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
+                                        <path d="M421.7 220.3L188.5 453.4L154.6 419.5L158.1 416H112C103.2 416 96 408.8 96 400V353.9L92.51 357.4C87.78 362.2 84.31 368 82.42 374.4L59.44 452.6L137.6 429.6C143.1 427.7 149.8 424.2 154.6 419.5L188.5 453.4C178.1 463.8 165.2 471.5 151.1 475.6L30.77 511C22.35 513.5 13.24 511.2 7.03 504.1C.8198 498.8-1.502 489.7 .976 481.2L36.37 360.9C40.53 346.8 48.16 333.9 58.57 323.5L291.7 90.34L421.7 220.3zM492.7 58.75C517.7 83.74 517.7 124.3 492.7 149.3L444.3 197.7L314.3 67.72L362.7 19.32C387.7-5.678 428.3-5.678 453.3 19.32L492.7 58.75z"></path>
+                                    </svg><label class="form-label">Edit</label></button><button class="btn btn-primary contactAction" type="button"><i class="fas fa-info-circle editIcon"></i><label class="form-label">Less Info</label></button></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25">
+                                    <p class="w-100">Phone</p>
+                                </div>
+                                <div class="col text-start ms-2 pe-5"><input type="tel" class="w-100" disabled=""></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25">
+                                    <p class="w-100">Street</p>
+                                </div>
+                                <div class="col text-start ms-2 pe-5"><input type="text" class="w-100" disabled=""></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25">
+                                    <p class="w-100">City</p>
+                                </div>
+                                <div class="col text-start ms-2 pe-5"><input type="text" class="w-100" disabled=""></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25">
+                                    <p class="w-100">State</p>
+                                </div>
+                                <div class="col text-start ms-2 pe-5">
+                                    <div class="dropdown w-100"><button class="btn btn-primary dropdown-toggle text-start contactInfoDropdown w-100" aria-expanded="false" data-bs-toggle="dropdown" type="button">Dropdown </button>
+                                        <div class="dropdown-menu"><a class="dropdown-item" href="#">FL</a><a class="dropdown-item" href="#">GA</a><a class="dropdown-item" href="#">SC</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25">
+                                    <p class="w-100">ZIP</p>
+                                </div>
+                                <div class="col text-start ms-2 pe-5"><input type="number" class="w-100" disabled=""></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25">
+                                    <p class="w-100">Country</p>
+                                </div>
+                                <div class="col text-start ms-2 pe-5">
+                                    <div class="dropdown w-100"><button class="btn btn-primary dropdown-toggle text-start contactInfoDropdown w-100" aria-expanded="false" data-bs-toggle="dropdown" type="button">Dropdown </button>
+                                        <div class="dropdown-menu"><a class="dropdown-item" href="#">United States</a><a class="dropdown-item" href="#">"Britain"</a><a class="dropdown-item" href="#">Europe</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25"><button class="btn btn-danger rounded-3" type="button">Delete Contact</button></div>
+                                <div class="col text-start ms-2 pe-5"><input type="text" class="w-100" disabled="" placeholder="Retype contact name to confirm"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row contactRow">
+                <div class="col">
+                    <div class="row contactRow">
+                        <div class="col">
+                            <p class="text-center contactRowContent">Full Name, cool guy</p>
+                        </div>
+                        <div class="col"><a class="text-break text-center" href="mailto:email@mail.ucf.edu">
+                                <p class="text-center contactRowContent">email@mail.ucf.edu</p>
+                            </a></div>
+                        <div class="col align-self-center align-middle">
+                            <p class="text-center contactRowContent">L3Harris O204</p>
+                        </div>
+                        <div class="col text-center align-self-center align-middle">
+                            <div class="btn-group btn-group-sm" role="group"><button class="btn btn-primary contactAction editButton" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor" class="editIcon">
+                                        <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
+                                        <path d="M433.1 129.1l-83.9-83.9C342.3 38.32 327.1 32 316.1 32H64C28.65 32 0 60.65 0 96v320c0 35.35 28.65 64 64 64h320c35.35 0 64-28.65 64-64V163.9C448 152.9 441.7 137.7 433.1 129.1zM224 416c-35.34 0-64-28.66-64-64s28.66-64 64-64s64 28.66 64 64S259.3 416 224 416zM320 208C320 216.8 312.8 224 304 224h-224C71.16 224 64 216.8 64 208v-96C64 103.2 71.16 96 80 96h224C312.8 96 320 103.2 320 112V208z"></path>
+                                    </svg><label class="form-label">Save</label></button><button class="btn btn-primary contactAction cancelButton" type="button"><i class="fas fa-times-circle editIcon"></i><label class="form-label">Cancel</label></button></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25">
+                                    <p class="w-100">Phone</p>
+                                </div>
+                                <div class="col text-start ms-2 pe-5"><input type="tel" class="w-100"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25">
+                                    <p class="w-100">Street</p>
+                                </div>
+                                <div class="col text-start ms-2 pe-5"><input type="text" class="w-100"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25">
+                                    <p class="w-100">City</p>
+                                </div>
+                                <div class="col text-start ms-2 pe-5"><input type="text" class="w-100"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25">
+                                    <p class="w-100">State</p>
+                                </div>
+                                <div class="col text-start ms-2 pe-5">
+                                    <div class="dropdown w-100"><button class="btn btn-primary dropdown-toggle text-start contactInfoDropdown w-100" aria-expanded="false" data-bs-toggle="dropdown" type="button">Dropdown </button>
+                                        <div class="dropdown-menu"><a class="dropdown-item" href="#">FL</a><a class="dropdown-item" href="#">GA</a><a class="dropdown-item" href="#">SC</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25">
+                                    <p class="w-100">ZIP</p>
+                                </div>
+                                <div class="col text-start ms-2 pe-5"><input type="number" class="w-100"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25">
+                                    <p class="w-100">Country</p>
+                                </div>
+                                <div class="col text-start ms-2 pe-5">
+                                    <div class="dropdown w-100"><button class="btn btn-primary dropdown-toggle text-start contactInfoDropdown w-100" aria-expanded="false" data-bs-toggle="dropdown" type="button">Dropdown </button>
+                                        <div class="dropdown-menu"><a class="dropdown-item" href="#">United States</a><a class="dropdown-item" href="#">"Britain"</a><a class="dropdown-item" href="#">Europe</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center align-self-center ms-5 w-25"><button class="btn btn-danger rounded-3" type="button">Delete Contact</button></div>
+                                <div class="col text-start ms-2 pe-5"><input type="text" class="w-100" placeholder="Retype contact name to confirm"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row contactRow">
+                <div class="col">
+                    <p class="text-center contactRowContent">Full Name, cool guy</p>
+                </div>
+                <div class="col"><a class="text-break text-center" href="mailto:email@mail.ucf.edu">
+                        <p class="text-center contactRowContent">email@mail.ucf.edu</p>
+                    </a></div>
+                <div class="col align-self-center align-middle">
+                    <p class="text-center contactRowContent">L3Harris O204</p>
+                </div>
+                <div class="col text-center align-self-center align-middle">
+                    <div class="btn-group btn-group-sm" role="group"><button class="btn btn-primary contactAction" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" class="editIcon">
+                                <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
+                                <path d="M421.7 220.3L188.5 453.4L154.6 419.5L158.1 416H112C103.2 416 96 408.8 96 400V353.9L92.51 357.4C87.78 362.2 84.31 368 82.42 374.4L59.44 452.6L137.6 429.6C143.1 427.7 149.8 424.2 154.6 419.5L188.5 453.4C178.1 463.8 165.2 471.5 151.1 475.6L30.77 511C22.35 513.5 13.24 511.2 7.03 504.1C.8198 498.8-1.502 489.7 .976 481.2L36.37 360.9C40.53 346.8 48.16 333.9 58.57 323.5L291.7 90.34L421.7 220.3zM492.7 58.75C517.7 83.74 517.7 124.3 492.7 149.3L444.3 197.7L314.3 67.72L362.7 19.32C387.7-5.678 428.3-5.678 453.3 19.32L492.7 58.75z"></path>
+                            </svg><label class="form-label">Edit</label></button><button class="btn btn-primary contactAction" type="button"><i class="fas fa-info-circle editIcon"></i><label class="form-label">More Info</label></button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
+
 </html>

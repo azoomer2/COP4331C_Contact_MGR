@@ -1,0 +1,40 @@
+<html>
+<head>
+	<title>COP 4331 LAMP Stack Demo</title>
+	<script type="text/javascript" src="js/code.js"></script>
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+	<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function()
+	{
+		readCookie();
+	}, false);
+	</script>
+
+</head>
+<body>
+
+<h1 id="title">COP 4331 LAMP Stack Demo</h1>
+
+<div id="loggedInDiv">
+	<span id="userName"></span><br />
+	<button type="button" id="logoutButton" class="buttons" onclick="doLogout();"> Log Out </button>
+</div>
+
+<div id="accessUIDiv">
+	<br />
+
+	<input type="text" id="searchText" placeholder="Contact To Search For"/>
+	<button type="button" id="searchContactButton" class="buttons" onclick="searchContact();"> Search Contact </button><br />
+	<span id="contactSearchResult"></span>
+	<p id="contactList">
+	</p><br /><br />
+
+	<input type="text" id="contactText" placeholder="Contact To Add">
+	<button type="button" id="addContactButton" class="buttons" onclick="addContact();"> Add Contact </button><br />
+	<span id="contactAddResult"></span>
+</div>
+
+</body>
+</html>
