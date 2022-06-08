@@ -4,13 +4,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>UCF_Contacts_Manager</title>
+    <title>Sign In: UCF Contacts Manager</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/css/Black-Navbar.css">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="assets/js/md5.js"></script>
+    <script type="text/javascript" src="assets/js/code.js"></script>
 </head>
 
 <body>
@@ -39,18 +43,18 @@
                 <div class="col-3 me-2">
                     <p>Username</p>
                 </div>
-                <div class="col text-center ms-3" s=""><input type="text" class="w-100" style="--bs-dark: #b3b3b3;--bs-dark-rgb: 179,179,179;"></div>
+                <div class="col text-center ms-3" s=""><input id="loginName" type="text" class="w-100" style="--bs-dark: #b3b3b3;--bs-dark-rgb: 179,179,179;"></div>
             </div>
             <div class="row w-75">
                 <div class="col-3 me-2">
                     <p>Password</p>
                 </div>
-                <div class="col text-center ms-3"><input type="text" class="w-100" style="--bs-dark: #b3b3b3;--bs-dark-rgb: 179,179,179;"></div>
+                <div class="col text-center ms-3"><input id="loginPassword" type="password" class="w-100" style="--bs-dark: #b3b3b3;--bs-dark-rgb: 179,179,179;"></div>
             </div>
             <h1 class="display-5 fw-bold"></h1>
             <p class="col-md-8 fs-4"></p>
             <div class="row w-75">
-                <div class="col text-center"><a class="btn btn-primary btn-lg w-100" role="button" href="#">Sign In</a></div>
+                <div class="col text-center"><a class="btn btn-primary btn-lg w-100" role="button" onclick="doLogin()">Sign In</a></div>
             </div>
             <div class="row w-75" style="margin-top: 14px;">
                 <div class="col-8">
@@ -58,6 +62,10 @@
                 </div>
                 <div class="col"><a class="btn btn-primary btn-lg w-100" role="button" href="register.html">Register</a></div>
             </div>
+            <div class="pt-3 row w-75">
+                <div class="col text-center"><span id="loginResult" class="text-danger lead w-100"></span></div>
+            </div>
+
         </div>
         <div class="container-fluid py-5" style="margin-top: 40px;">
             <p class="w-100" style="margin-bottom: 0px;"><em>NOTE: </em><strong><em><span style="color: rgb(255, 201, 4);">Not an official UCF Service</span>.&nbsp;</em></strong><br>Made by Alex Z, Cesar H, Leo G, Reece S, Michael M, and Elias C.</p>

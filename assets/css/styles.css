@@ -191,3 +191,6 @@ html, body {
   /*min-height: 100%;*/
 }
 
+#loginResult {
+  margin-top: 35%;
+}
