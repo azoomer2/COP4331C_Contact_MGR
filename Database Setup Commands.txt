@@ -1,0 +1,62 @@
+Create Database
+---------------
+
+mysql -u root -p
+
+create database COP4331;
+use COP4331;
+
+
+Create "Users" and "Contacts" Table To Store Data
+-------------------------------------------------
+
+CREATE TABLE `COP4331`.`Users` 
+( 
+	`ID` INT NOT NULL AUTO_INCREMENT , 
+	`DateCreated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+	`DateLastLoggedIn` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+	`FirstName` VARCHAR(50) NOT NULL DEFAULT '' , 
+	`LastName` VARCHAR(50) NOT NULL DEFAULT '' , 
+	`Login` VARCHAR(50) NOT NULL DEFAULT '' , 
+	`Password` VARCHAR(50) NOT NULL DEFAULT '' , 
+	PRIMARY KEY (`ID`)
+) ENGINE = InnoDB;
+
+
+CREATE TABLE COP4331.Contacts 
+( 
+    ID INT NOT NULL AUTO_INCREMENT , 
+    Name VARCHAR(50) NOT NULL DEFAULT '' , 
+    Phone VARCHAR(12), 
+    email VARCHAR(50), 
+    Street VARCHAR(50),
+    City VARCHAR(50),
+    State VARCHAR(50),
+    ZIP VARCHAR(50),
+    Country VARCHAR(50),
+    Office VARCHAR(50), 
+    UserID INT NOT NULL DEFAULT '0' , 
+    PRIMARY KEY (ID)
+) ENGINE = InnoDB;
+
+
+Populate Database With Test Data
+--------------------------------
+
+USE COP4331;
+
+insert into Users (FirstName,LastName,Login,Password) VALUES ('Rick','Leinecker','RickL','COP4331');
+insert into Users (FirstName,LastName,Login,Password) VALUES ('Sam','Hill','SamH','Test');
+insert into Users (FirstName,LastName,Login,Password) VALUES ('Rick','Leinecker','RickL','5832a71366768098cceb7095efb774f2');
+insert into Users (FirstName,LastName,Login,Password) VALUES ('Sam','Hill','SamH','0cbc6611f5540bd0809a388dc95a615b');
+
+
+insert into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, UserID) VALUES ('Carly', '123-456-7890', 'carly@gmail.com', '123 streetStreet', 'Rutherford', 'NY' ,'08080', 'United States',1) ;
+insert into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, UserID) VALUES ('Fred', '223-456-7890', 'fred@gmail.com', '223 street street', 'City City', 'NY' , '08081', 'United States', 1);
+insert into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, UserID) VALUES ('Sam', '323-456-7890', 'sam@gmail.com', '323 street street', 'FutureWorld', 'NY' , '08082', 'United States', 1);
+insert into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, UserID) VALUES ('Spencer', '423-456-7890', 'spencer@gmail.com', '423 street street', 'Crab City', 'NY' , '08083', 'United States', 1);
+
+insert into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, UserID) VALUES ('Bob', '523-456-7890', 'bob@gmail.com', '523 street street', 'Bubble City', 'NY' , '08084', 'United States', 3);
+insert into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, UserID) VALUES ('Patrick', '623-456-7890', 'patrik@gmail.com', '623 street street', 'Clean City', 'NY' , '08085', 'United States', 3);
+insert into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, UserID) VALUES ('Edward', '723-456-7890', 'edward@gmail.com', '723 street street', 'Squid City', 'NY' , '08086', 'United States', 3);
+insert into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, UserID) VALUES ('Eugine', '823-456-7890', 'eugine@gmail.com', '823 street street', 'Krusty Krab', 'NY' , '08087', 'United States', 3);
