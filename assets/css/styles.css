@@ -123,6 +123,17 @@ input {
   }
 }
 
+.contactRowTop {
+  background-color: white;
+  margin-bottom: 0.3rem;
+  padding-bottom: 0.5rem;
+}
+
+@media (max-width: 700px) {
+  .contactRowTop {
+    font-size: small;
+  }
+}
 .contactAction {
   background-color: var(--ucf-lightyellow);
 }
@@ -132,7 +143,7 @@ input {
 }
 
 @media (max-width:768px) {
-  .contactRow .btn-group label {
+  .contactRow .btn-group label, .contactRowTop .btn-group label {
     display: none!important;
   }
 }
@@ -144,6 +155,7 @@ input {
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
   color: var(--bs-body-color);
+  border-radius: 7px;
 }
 
 @media (max-width: 700px) {
@@ -152,7 +164,7 @@ input {
   }
 }
 
-.contactAction.editButton {
+.contactAction.saveButton {
   background-color: #CDEB8B;
 }
 
@@ -189,8 +201,4 @@ html, body {
   background-color: var(--ucf-yellow);
   min-height: 100vh;
   /*min-height: 100%;*/
-}
-
-#loginResult {
-  margin-top: 35%;
 }

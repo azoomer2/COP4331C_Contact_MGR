@@ -117,41 +117,8 @@ function doLogout()
 	window.location.href = "index.html";
 }
 
-function addContact()
+function editContact()
 {
-	let newContact = document.getElementById("contactText").value;
-	document.getElementById("contactAddResult").innerHTML = "";
-
-	let tmp = {contact:newContact,userId,userId};
-	let jsonPayload = JSON.stringify( tmp );
-
-	let url = urlBase + '/AddContact.' + extension;
-
-	let xhr = new XMLHttpRequest();
-	try
-	{
-		xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-	}
-	catch(err)
-	{
-		document.getElementById("contactAddResult").innerHTML = err.message;
-	}
-	try
-	{
-		xhr.onreadystatechange = function()
-		{
-			if (this.readyState == 4 && this.status == 200)
-			{
-				document.getElementById("contactAddResult").innerHTML = "Contact has been added";
-			}
-		};
-		xhr.send(jsonPayload);
-	}
-	catch(err)
-	{
-		document.getElementById("contactAddResult").innerHTML = err.message;
-	}
 
 }
 
@@ -208,9 +175,137 @@ function searchContact()
 }
 
 $(document).ready(function(){
+	var blankContact = $($("#blankContact").html());
+	console.log(blankContact);
+
+	// hide buttongroups not in use
+	$('#contactsPane div:first').children('.contactRow').each(function () {
+    if ($(this).attr("editable") == 1)
+		{
+			console.log("hiding saveCancelGroup");
+			$(this).find(".editInfoGroup:first").hide();
+		}
+		else
+		{
+			console.log("hiding saveCancelGroup");
+			$(this).find(".saveCancelGroup:first").hide();
+		}
+});
+
+	// more/less info handler
 	$(".contactInfoButton").click(function () {
-		console.log("click!!")
+		console.log("more/less info");
 	  var $el = $(this);
 	  $el.children("label").text($el.children("label").text() == "More Info" ? "Less Info": "More Info");
 	});
+
+	// edit button handler
+	$(".contactEditButton").click(function () {
+		console.log("edit time :)");
+		let editable = $(this).parentsUntil("div .contactRow").parent().attr("editable");
+		console.log(editable);
+		// if window already expanded, keep it expanded
+		if (editable == 0) {
+			var inf = $(this).parent().children(".contactInfoButton");
+			inf.trigger('click');
+		}
+		// now, make contact editable
+		let cRow = $(this).parentsUntil("div .contactRow").parent();
+		toggleContactEdits(cRow);
+		// swap edit/info buttons with save/cancel buttons
+		cRow.children(".editInfoGroup").hide();
+		cRow.children(".saveCancelGroup").show();
+	});
+
+	// save button handler
+	$(".saveButton").click(function () {
+		console.log("saving progress");
+		// toggle edits
+		// discard oldState
+		// editContact();
+	});
+
+	// cancel button handler
+	$(".cancelButton").click(function () {
+		console.log("cancelling edits");
+		// toggle editability
+		// return to previous state
+	});
+
+	// add/cancel adding contact handling
+	$('#addContactButton').click(function () {
+		console.log("newContact called");
+		blankContact.clone().prependTo($('#contactsPane div:first'));
+
+		// cancel button
+		$('#contactsPane div:first .contactRow:first .cancelButton:first').click(function () {
+			console.log("new contact cancelled!");
+			$(this).parentsUntil("div .contactRow").parent().remove();
+		});
+		// save button
+		$('#contactsPane div:first .contactRow:first .saveButton:first').click(function () {
+			console.log("new contact saved!");
+			// $(this).parentsUntil("div .contactRow").parent().remove();
+			toggleContactEdits($(this).parentsUntil("div .contactRow").parent());
+		});
+	})
+
+	// toggles editable attribute & makes contact editable.
+	function toggleContactEdits(cRow)
+	{
+		console.log(cRow);
+		if (cRow.attr("editable") == 0) {
+			cRow.attr("editable", 1);
+			// make inputs all editable
+		}
+		else {
+			cRow.attr("editable", 0);
+			// disable all input boxes
+		}
+	}
+
 });
+
+function addContact()
+{
+	let newContact = document.getElementById("contactText").value;
+	document.getElementById("contactAddResult").innerHTML = "";
+
+	let tmp = {contact:newContact,userId,userId};
+	let jsonPayload = JSON.stringify( tmp );
+
+	let url = urlBase + '/AddContact.' + extension;
+
+	let xhr = new XMLHttpRequest();
+	try
+	{
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	}
+	catch(err)
+	{
+		document.getElementById("contactAddResult").innerHTML = err.message;
+	}
+	try
+	{
+		xhr.onreadystatechange = function()
+		{
+			if (this.readyState == 4 && this.status == 200)
+			{
+				document.getElementById("contactAddResult").innerHTML = "Contact has been added";
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("contactAddResult").innerHTML = err.message;
+	}
+
+}
+
+// function newContact()
+// {
+// 	console.log("newContact called");
+// 	$('contactsPane').prepend(blankContact.clone());
+// }
