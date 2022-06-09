@@ -205,4 +205,5 @@ html, body {
 
 .text-danger {
   color: #fc0303;
+  -webkit-text-stroke: 2px white;
 }
