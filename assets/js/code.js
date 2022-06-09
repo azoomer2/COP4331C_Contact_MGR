@@ -205,7 +205,9 @@ $(document).ready(function(){
 		let editable = $(this).parentsUntil("div .contactRow").parent().attr("editable");
 		console.log(editable);
 		// if window already expanded, keep it expanded
-		if (editable == 0) {
+		let infoButtonText = $(this).parent().find(".contactInfoButton label").text();
+	  console.log(infoButtonText);
+		if (editable == 0 && infoButtonText == "More Info") {
 			var inf = $(this).parent().children(".contactInfoButton");
 			inf.trigger('click');
 		}
@@ -309,3 +311,4 @@ function addContact()
 // 	console.log("newContact called");
 // 	$('contactsPane').prepend(blankContact.clone());
 // }
+//Hey dude
