@@ -1,4 +1,7 @@
 <?php
+  $inData = getRequestInfo();
+
+	$ID = $inData["ID"];
 
 	$conn = new mysqli("localhost", "root", "cop43312", "COP4331");
 	if ($conn->connect_error)
@@ -8,22 +11,31 @@
 
 	else
 	{
-		$ID = $_POST['ID'];
-		$conn->query("DELETE FROM Contacts WHERE ID = '$ID'");
+		$stmt = $conn->prepare("DELETE FROM Contacts WHERE (ID=?)");
+		$stmt->bind_param("i", $ID);
 
-		if($conn->affected_rows > 0)
-		{
-			echo "Contact deleted";
-		}
-		else
-		{
-			echo "Contact unable to be deleted";
-		}
-
-		$conn->close();
+    if($stmt->execute() == true)
+    {
+    	returnWithError("");
+    }
+    else
+    {
+    	returnWithError("Contact unable to be deleted");
+    }
 	}
 
-  function returnWithError( $err )
+	function getRequestInfo()
+	{
+		return json_decode(file_get_contents('php://input'), true);
+	}
+
+	function sendResultInfoAsJson( $obj )
+	{
+		header('Content-type: application/json');
+		echo $obj;
+	}
+
+	function returnWithError( $err )
 	{
 		$retValue = '{"error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
