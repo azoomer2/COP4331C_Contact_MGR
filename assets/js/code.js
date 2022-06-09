@@ -176,7 +176,13 @@ function searchContact()
 
 $(document).ready(function(){
 	var blankContact = $($("#blankContact").html());
+	var defaultContact = $($("#defaultContact").html());
 	console.log(blankContact);
+
+	// add defaultContact rq for testing
+	defaultContact.clone().prependTo($('#contactsPane div:first'));
+	var inf = $('#contactsPane div:first .contactRow:first').find(".contactInfoButton");
+	inf.trigger('click');
 
 	// hide buttongroups not in use
 	$('#contactsPane div:first').children('.contactRow').each(function () {
@@ -238,6 +244,7 @@ $(document).ready(function(){
 	$('#addContactButton').click(function () {
 		console.log("newContact called");
 		blankContact.clone().prependTo($('#contactsPane div:first'));
+		$('#contactsPane .contactRow:first').find(".editInfoGroup:first").hide();
 
 		// cancel button
 		$('#contactsPane div:first .contactRow:first .cancelButton:first').click(function () {
@@ -253,16 +260,19 @@ $(document).ready(function(){
 	})
 
 	// toggles editable attribute & makes contact editable.
+	// input: expects a jQuery object of a .contactRow <div>.
 	function toggleContactEdits(cRow)
 	{
 		console.log(cRow);
 		if (cRow.attr("editable") == 0) {
 			cRow.attr("editable", 1);
 			// make inputs all editable
+			cRow.children("input").prop("disabled", false);
 		}
 		else {
 			cRow.attr("editable", 0);
 			// disable all input boxes
+			cRow.children("input").prop("disabled", true);
 		}
 	}
 
