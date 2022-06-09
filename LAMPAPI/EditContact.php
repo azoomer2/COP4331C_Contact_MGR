@@ -7,7 +7,7 @@
 	}
 	else
 	{
-		$id = $_POST['id'];
+		$ID = $_POST['ID'];
 
 		// get user input for new contact information
 		$Name = $_POST['Name'];
@@ -18,6 +18,7 @@
 		$State = $_POST['State'];
 		$ZIP = $_POST['ZIP'];
 		$Country = $_POST['Country'];
+		$office = $_POST['office'];
 
 		// update contact with given user input
 		$stmt = $conn->prepare("UPDATE Contacts SET
@@ -29,17 +30,17 @@
 			State = '$State',
 			ZIP = '$ZIP',
 			Country = '$Country',
-			WHERE ID = '$id'");
+			office = '$office'
+			WHERE ID = '$ID'");
 		$stmt->execute();
-		$result = $stmt->get_result();
 
-		if(!$result)
+		if($conn->affected_rows > 0)
 		{
-			returnWithError("Contact edit failed");
+			echo "Contact edited successfully";
 		}
 		else
 		{
-			echo "Contact updated successfully";
+			echo "Contact was unable to be edited";
 		}
 
 		$stmt->close();
