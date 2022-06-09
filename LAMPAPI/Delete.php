@@ -8,25 +8,22 @@
 
 	else
 	{
-		$id = $_POST['id'];
-		$stmt = $conn->prepare("DELETE FROM Contacts WHERE ID = '$id'");
-		$stmt->execute();
-		$result = $stmt->get_result();
+		$ID = $_POST['ID'];
+		$conn->query("DELETE FROM Contacts WHERE ID = '$ID'");
 
-		if($result)
+		if($conn->affected_rows > 0)
 		{
 			echo "Contact deleted";
 		}
 		else
 		{
-			returnWithError("Contact unable to be deleted");
+			echo "Contact unable to be deleted";
 		}
 
-		$stmt->close();
 		$conn->close();
 	}
 
-	function returnWithError( $err )
+  function returnWithError( $err )
 	{
 		$retValue = '{"error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
