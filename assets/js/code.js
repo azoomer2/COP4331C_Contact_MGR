@@ -198,6 +198,35 @@ $(document).ready(function(){
 		}
 });
 
+	// function for grabbing contact JSON with all info addContact and editContact need.
+	// input: expects a jQuery object of a .contactRow <div>.
+	// returns: a JSON object.
+	function grabJSON(cRow)
+	{
+		// XSS vulnerable.
+		let tmp = {};
+		tmp["Name"] = cRow.find("input.nameInput").val();
+		tmp["Phone"] = cRow.find("input.phoneInput").val();
+		tmp["email"] = cRow.find("input.emailInput").val();
+		tmp["Street"] = cRow.find("input.streetInput").val();
+		tmp["City"] = cRow.find("input.cityInput").val();
+		tmp["State"] = cRow.find("select.stateInput option:selected").text();
+		tmp["ZIP"] = parseInt(cRow.find("input.zipInput").val());
+		tmp["Country"] = cRow.find("select.countryInput option:selected").text();
+		tmp["office"] = cRow.find("input.officeInput").val();
+		tmp["UserID"] = userId;
+	//	var tmp = {login:login,password:hash};
+		let res = JSON.stringify( tmp );
+		return res;
+	}
+
+	// function for populating contact JSON given a JSON thing.
+	// input: expects a jQuery object of a .contactRow <div> and a JSON object.
+	function putJSON(cRow, json)
+	{
+		// will be the opposite of grabJSON's code :) 
+	}
+
 	// more/less info handler
 	$(".contactInfoButton").click(function () {
 		console.log("more/less info");
@@ -207,8 +236,9 @@ $(document).ready(function(){
 
 	// edit button handler
 	$(".contactEditButton").click(function () {
+		let cRow = $(this).parentsUntil("div .contactRow").parent();
 		console.log("edit time :)");
-		let editable = $(this).parentsUntil("div .contactRow").parent().attr("editable");
+		let editable = cRow.attr("editable");
 		console.log(editable);
 		// if window already expanded, keep it expanded
 		let infoButtonText = $(this).parent().find(".contactInfoButton label").text();
@@ -217,8 +247,13 @@ $(document).ready(function(){
 			var inf = $(this).parent().children(".contactInfoButton");
 			inf.trigger('click');
 		}
+
+		// save current entered info
+		$(cRow).data('oldState',grabJSON(cRow));
+		console.log("CROW DATA:");
+		console.log($(cRow).data('oldState'));
+
 		// now, make contact editable
-		let cRow = $(this).parentsUntil("div .contactRow").parent();
 		toggleContactEdits(cRow);
 		// swap edit/info buttons with save/cancel buttons
 		cRow.children(".editInfoGroup").hide();
@@ -235,9 +270,15 @@ $(document).ready(function(){
 
 	// cancel button handler
 	$(".cancelButton").click(function () {
+		let cRow = $(this).parentsUntil("div .contactRow").parent();
 		console.log("cancelling edits");
 		// toggle editability
+		toggleContactEdits(cRow);
 		// return to previous state
+		putJSON(cRow, $(cRow).data('oldState'));
+		// swap button groups
+		cRow.children(".saveCancelGroup").hide();
+		cRow.children(".editInfoGroup").show();
 	});
 
 	// add/cancel adding contact handling
@@ -254,6 +295,7 @@ $(document).ready(function(){
 		// save button
 		$('#contactsPane div:first .contactRow:first .saveButton:first').click(function () {
 			console.log("new contact saved!");
+			console.log(grabJSON($(this).parentsUntil("div .contactRow").parent()));
 			// $(this).parentsUntil("div .contactRow").parent().remove();
 			toggleContactEdits($(this).parentsUntil("div .contactRow").parent());
 		});
@@ -263,7 +305,7 @@ $(document).ready(function(){
 	// input: expects a jQuery object of a .contactRow <div>.
 	function toggleContactEdits(cRow)
 	{
-		console.log(cRow);
+		//console.log(cRow);
 		if (cRow.attr("editable") == 0) {
 			cRow.attr("editable", 1);
 			// make inputs all editable
