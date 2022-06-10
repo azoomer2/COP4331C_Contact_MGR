@@ -117,7 +117,10 @@ function doLogout()
 	window.location.href = "index.html";
 }
 
-function editContact()
+// sends API call with required JSON.
+// input: correct JSON structure.
+// returns: the POST results.
+function editContact(jsonPayload)
 {
 
 }
@@ -224,7 +227,7 @@ $(document).ready(function(){
 	// input: expects a jQuery object of a .contactRow <div> and a JSON object.
 	function putJSON(cRow, json)
 	{
-		// will be the opposite of grabJSON's code :) 
+		// will be the opposite of grabJSON's code :)
 	}
 
 	// more/less info handler
@@ -262,10 +265,27 @@ $(document).ready(function(){
 
 	// save button handler
 	$(".saveButton").click(function () {
+		let cRow = $(this).parentsUntil("div .contactRow").parent();
+		// first, make sure they're saving this contact with a name
+		if (cRow.find("input.nameInput").val() == "")
+		{
+			alert("ERROR: Contacts need a name.");
+			return;
+		}
 		console.log("saving progress");
 		// toggle edits
+		toggleContactEdits(cRow);
+
 		// discard oldState
-		// editContact();
+		$(cRow).removeData('oldState');
+
+		// editContact() API call
+		let res = editContact(grabJSON(cRow));
+		if (res["error"] != "")
+		{
+			// TODO: finish this lol 
+		}
+
 	});
 
 	// cancel button handler
