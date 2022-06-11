@@ -54,7 +54,7 @@ function doLogin()
 
 				saveCookie();
 				console.log("cookie saved");
-				//window.location.href = "contacts.html";
+				window.location.href = "contacts.html";
 			}
 		};
 		xhr.send(jsonPayload);
