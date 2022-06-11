@@ -127,100 +127,12 @@ function editContact(jsonPayload)
 
 }
 
-function searchContact()
-{
-	let srch = document.getElementById("searchText").value;
-	document.getElementById("contactSearchResult").innerHTML = "";
-
-	let contactList = "";
-
-	let tmp = {"search":srch,"UserID":userId};
-	let jsonPayload = JSON.stringify( tmp );
-
-	let url = urlBase + '/SearchContact.' + extension;
-	console.log("jsonPayload:", jsonPayload);
-	console.log("url:", url);
-	let xhr = new XMLHttpRequest();
-	try
-	{
-		xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-	}
-	catch(err)
-	{
-		document.getElementById("contactSearchResult").innerHTML = err.message;
-	}
-	try
-	{
-		xhr.onreadystatechange = function()
-		{
-			if (this.readyState == 4 && this.status == 200)
-			{
-				document.getElementById("contactSearchResult").innerHTML = "Contact(s) has been retrieved";
-				let jsonObject = JSON.parse( xhr.responseText );
-				console.log("jsonObject:", jsonObject);
-
-				for( let i=0; i<jsonObject.results.length; i++ )
-				{
-					// make new cRow
-					let tempContact = defaultContact.clone();
-					// fill with info
-					console.log(jsonObject.results[i]);
-					putJSON(tempContact, jsonObject.results[i]);
-					// prepend to contactsPane
-					tempContact.prependTo($('#contactsPane div:first'));
-
-					// contactList += jsonObject.results[i];
-					// if( i < jsonObject.results.length - 1 )
-					// {
-					// 	contactList += "<br />\r\n";
-					// }
-				}
-
-				//document.getElementsByTagName("p")[0].innerHTML = contactList;
-			}
-			else {
-				document.getElementById("contactSearchResult").innerHTML = "Something has gone wrong";
-			}
-		};
-		xhr.send(jsonPayload);
-	}
-	catch(err)
-	{
-		document.getElementById("contactSearchResult").innerHTML = err.message;
-	}
-
-}
-
 if (window.location.href.includes("contacts.html"))
 {
 	$(document).ready(function(){
 		blankContact = $($("#blankContact").html());
 		defaultContact = $($("#defaultContact").html());
 		console.log(blankContact);
-
-		// add defaultContact rq for testing
-		defaultContact.clone().prependTo($('#contactsPane div:first'));
-		var inf = $('#contactsPane div:first .contactRow:first').find(".contactInfoButton");
-		inf.trigger('click');
-
-		// populate screen with blank search results
-		console.log("searchContact called");
-		searchContact();
-
-		// hide buttongroups not in use
-		$('#contactsPane div:first').children('.contactRow').each(function () {
-	    if ($(this).attr("editable") == 1)
-			{
-				console.log("hiding saveCancelGroup");
-				$(this).find(".editInfoGroup:first").hide();
-			}
-			else
-			{
-				console.log("hiding saveCancelGroup");
-				$(this).find(".saveCancelGroup:first").hide();
-			}
-	});
 
 		// function for grabbing contact JSON with all info addContact and editContact need.
 		// input: expects a jQuery object of a .contactRow <div>.
@@ -270,6 +182,94 @@ if (window.location.href.includes("contacts.html"))
 			cRow.find("div#C1").attr('id', "C" + tmp);
 			console.log("new collapse ID:", cRow.find("div#C1").attr('id'))
 		}
+
+		function searchContact()
+		{
+			let srch = document.getElementById("searchText").value;
+			document.getElementById("contactSearchResult").innerHTML = "";
+
+			let contactList = "";
+
+			let tmp = {"search":srch,"UserID":userId};
+			let jsonPayload = JSON.stringify( tmp );
+
+			let url = urlBase + '/SearchContact.' + extension;
+			console.log("jsonPayload:", jsonPayload);
+			console.log("url:", url);
+			let xhr = new XMLHttpRequest();
+			try
+			{
+				xhr.open("POST", url, true);
+				xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+			}
+			catch(err)
+			{
+				document.getElementById("contactSearchResult").innerHTML = err.message;
+			}
+			try
+			{
+				xhr.onreadystatechange = function()
+				{
+					if (this.readyState == 4 && this.status == 200)
+					{
+						document.getElementById("contactSearchResult").innerHTML = "Contact(s) has been retrieved";
+						let jsonObject = JSON.parse( xhr.responseText );
+						console.log("jsonObject:", jsonObject);
+
+						for( let i=0; i<jsonObject.results.length; i++ )
+						{
+							// make new cRow
+							let tempContact = defaultContact.clone();
+							// fill with info
+							console.log(jsonObject.results[i]);
+							putJSON(tempContact, jsonObject.results[i]);
+							// prepend to contactsPane
+							tempContact.prependTo($('#contactsPane div:first'));
+
+							// contactList += jsonObject.results[i];
+							// if( i < jsonObject.results.length - 1 )
+							// {
+							// 	contactList += "<br />\r\n";
+							// }
+						}
+
+						//document.getElementsByTagName("p")[0].innerHTML = contactList;
+					}
+					else {
+						document.getElementById("contactSearchResult").innerHTML = "Something has gone wrong";
+					}
+				};
+				xhr.send(jsonPayload);
+			}
+			catch(err)
+			{
+				document.getElementById("contactSearchResult").innerHTML = err.message;
+			}
+
+		}
+
+		// add defaultContact rq for testing
+		defaultContact.clone().prependTo($('#contactsPane div:first'));
+		var inf = $('#contactsPane div:first .contactRow:first').find(".contactInfoButton");
+		inf.trigger('click');
+
+		// populate screen with blank search results
+		console.log("searchContact called");
+		searchContact();
+
+		// hide buttongroups not in use
+		$('#contactsPane div:first').children('.contactRow').each(function () {
+	    if ($(this).attr("editable") == 1)
+			{
+				console.log("hiding saveCancelGroup");
+				$(this).find(".editInfoGroup:first").hide();
+			}
+			else
+			{
+				console.log("hiding saveCancelGroup");
+				$(this).find(".saveCancelGroup:first").hide();
+			}
+	});
 
 		// more/less info handler
 		$(".contactInfoButton").click(function () {
