@@ -136,8 +136,8 @@ function searchContact()
 	let jsonPayload = JSON.stringify( tmp );
 
 	let url = urlBase + '/SearchContact.' + extension;
-	console.log(jsonPayload);
-	console.log(url);
+	console.log("jsonPayload:", jsonPayload);
+	console.log("url:", url);
 	let xhr = new XMLHttpRequest();
 	try
 	{
@@ -156,6 +156,7 @@ function searchContact()
 			{
 				document.getElementById("contactSearchResult").innerHTML = "Contact(s) has been retrieved";
 				let jsonObject = JSON.parse( xhr.responseText );
+				console.log("jsonObject:", jsonObject);
 
 				for( let i=0; i<jsonObject.results.length; i++ )
 				{
