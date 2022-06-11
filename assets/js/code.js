@@ -181,7 +181,7 @@ if (window.location.href.includes("contacts.html"))
 			console.log("concatenated ID:", tID);
 			cRow.attr("contactID", tmp); // will later be json["id"]
 			cRow.find("button[data-bs-target='#C1']").attr("data-bs-target", tID);
-			cRow.find("#C1").prop('id', tID);
+			cRow.find("#C1").attr('id', tID);
 			console.log("new collapse ID:", cRow.find("#C1").attr('id'), tmp);
 		}
 
