@@ -132,7 +132,7 @@ function searchContact()
 
 	let contactList = "";
 
-	let tmp = {search:srch,userId:userId};
+	let tmp = {"search":srch,"UserID":userId};
 	let jsonPayload = JSON.stringify( tmp );
 
 	let url = urlBase + '/SearchContacts.' + extension;
@@ -158,14 +158,22 @@ function searchContact()
 
 				for( let i=0; i<jsonObject.results.length; i++ )
 				{
-					contactList += jsonObject.results[i];
-					if( i < jsonObject.results.length - 1 )
-					{
-						contactList += "<br />\r\n";
-					}
+					// make new cRow
+					let tempContact = defaultContact.clone();
+					// fill with info
+					console.log(jsonObject.results[i]);
+					putJSON(tempContact, jsonObject.results[i]);
+					// prepend to contactsPane
+					tempContact.prependTo($('#contactsPane div:first'));
+
+					// contactList += jsonObject.results[i];
+					// if( i < jsonObject.results.length - 1 )
+					// {
+					// 	contactList += "<br />\r\n";
+					// }
 				}
 
-				document.getElementsByTagName("p")[0].innerHTML = contactList;
+				//document.getElementsByTagName("p")[0].innerHTML = contactList;
 			}
 		};
 		xhr.send(jsonPayload);
@@ -186,6 +194,10 @@ $(document).ready(function(){
 	defaultContact.clone().prependTo($('#contactsPane div:first'));
 	var inf = $('#contactsPane div:first .contactRow:first').find(".contactInfoButton");
 	inf.trigger('click');
+
+	// populate screen with blank search results
+	console.log("searchContact called");
+	searchContact();
 
 	// hide buttongroups not in use
 	$('#contactsPane div:first').children('.contactRow').each(function () {
@@ -283,7 +295,7 @@ $(document).ready(function(){
 		let res = editContact(grabJSON(cRow));
 		if (res["error"] != "")
 		{
-			// TODO: finish this lol 
+			// TODO: finish this lol
 		}
 
 	});
