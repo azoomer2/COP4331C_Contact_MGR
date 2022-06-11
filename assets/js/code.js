@@ -177,9 +177,11 @@ if (window.location.href.includes("contacts.html"))
 			cRow.find("select.countryInput").val(json["Country"]).change();
 			cRow.find(".officeInput").val(json["office"]);
 			let tmp = getUniqueContactID();
+			let tID = "C" + tmp;
+			console.log("concatenated ID:", tID);
 			cRow.attr("contactID", tmp); // will later be json["id"]
-			cRow.find("button[data-bs-target='#C1']").attr("data-bs-target", "C" + tmp);
-			cRow.find("#C1").attr('id', "C" + tmp);
+			cRow.find("button[data-bs-target='#C1']").attr("data-bs-target", tID);
+			cRow.find("#C1").attr('id', tID);
 			console.log("new collapse ID:", cRow.find("#C1").attr('id'), tmp);
 		}
 
