@@ -135,7 +135,7 @@ function searchContact()
 	let tmp = {"search":srch,"UserID":userId};
 	let jsonPayload = JSON.stringify( tmp );
 
-	let url = urlBase + '/SearchContacts.' + extension;
+	let url = urlBase + '/SearchContact.' + extension;
 	console.log(jsonPayload);
 	console.log(url);
 	let xhr = new XMLHttpRequest();
