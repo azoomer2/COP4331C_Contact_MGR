@@ -4,6 +4,8 @@ const extension = 'php';
 var userId = 0;
 let firstName = "";
 let lastName = "";
+var blankContact;
+var defaultContact;
 
 function doLogin()
 {
@@ -193,8 +195,8 @@ function searchContact()
 if (window.location.href.includes("contacts.html"))
 {
 	$(document).ready(function(){
-		var blankContact = $($("#blankContact").html());
-		var defaultContact = $($("#defaultContact").html());
+		blankContact = $($("#blankContact").html());
+		defaultContact = $($("#defaultContact").html());
 		console.log(blankContact);
 
 		// add defaultContact rq for testing
