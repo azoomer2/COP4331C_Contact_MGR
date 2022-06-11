@@ -183,7 +183,7 @@ if (window.location.href.includes("contacts.html"))
 			cRow.find("button[data-bs-target='#C1']").attr("data-bs-target", tID);
 			cRow.find("div#C1").attr('id', tID);
 			console.log("new collapse ID:", cRow.find("div#C1").attr('id'), tmp);
-			console.log(cRow.find("div#C1"));
+			console.log(cRow.find("#C1"));
 		}
 
 		function searchContact()
