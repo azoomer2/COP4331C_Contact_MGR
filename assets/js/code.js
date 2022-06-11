@@ -244,11 +244,31 @@ if (window.location.href.includes("contacts.html"))
 			return res;
 		}
 
+		var cid = 2; // temporary contact unique id maker (not to be used in API)
+		function getUniqueContactID()
+		{
+			cid = cid + 1;
+			return cid;
+		}
+
 		// function for populating contact JSON given a JSON thing.
 		// input: expects a jQuery object of a .contactRow <div> and a JSON object.
 		function putJSON(cRow, json)
 		{
-			// will be the opposite of grabJSON's code :)
+			cRow.find("input.nameInput").val(json["Name"]);
+			cRow.find("input.phoneInput").val(json["Phone"]);
+			cRow.find("input.emailInput").val(json["email"]);
+			cRow.find("input.streetInput").val(json["Street"]);
+			cRow.find("input.cityInput").val(json["City"]);
+			cRow.find("select.stateInput").val(json["State"]).change();
+			cRow.find("input.zipInput").val(parseInt(json["ZIP"]));
+			cRow.find("select.countryInput").val(json["Country"]).change();
+			cRow.find("input.officeInput").val(json["office"]);
+			let tmp = getUniqueContactID();
+			cRow.attr("contactID", tmp); // will later be json["id"]
+			cRow.find("button[data-bs-target='#C1']").attr("data-bs-target", "C" + tmp);
+			cRow.find("div#C1").attr('id', "C" + tmp);
+			console.log("new collapse ID:", cRow.find("div#C1").attr('id'))
 		}
 
 		// more/less info handler
