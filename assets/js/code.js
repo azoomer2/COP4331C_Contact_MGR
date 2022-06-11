@@ -186,6 +186,8 @@ function searchContact()
 
 }
 
+if (window.location.href == "contacts.html")
+{
 $(document).ready(function(){
 	var blankContact = $($("#blankContact").html());
 	var defaultContact = $($("#defaultContact").html());
@@ -352,6 +354,7 @@ $(document).ready(function(){
 	}
 
 });
+}
 
 function addContact()
 {
