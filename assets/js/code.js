@@ -177,6 +177,9 @@ function searchContact()
 
 				//document.getElementsByTagName("p")[0].innerHTML = contactList;
 			}
+			else {
+				document.getElementById("contactSearchResult").innerHTML = "Something has gone wrong";
+			}
 		};
 		xhr.send(jsonPayload);
 	}
