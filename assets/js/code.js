@@ -199,7 +199,7 @@ async function editContact(jsonPayload)
                 statusText: xhr.statusText
             });
         };
-        xhr.send();
+        xhr.send(jsonPayload);
     });
 }
 
@@ -329,7 +329,7 @@ if (window.location.href.includes("contacts.html"))
 				// first, make sure they're saving this contact with a name
 				if (cRow.find("input.nameInput").val() == "")
 				{
-					alert("ERROR: Contacts need a name.");
+					alert("ERRORß: Contacts need a name.");
 					return;
 				}
 				console.log("saving progress");
