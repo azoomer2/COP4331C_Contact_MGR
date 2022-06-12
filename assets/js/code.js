@@ -129,6 +129,7 @@ function editContact(jsonPayload)
 	jsonPayload["ID"] = jsonPayload["contactID"]
 	jsonPayload = JSON.parse(jsonPayload);
 
+	console.log("editContact, jsonPayload:", jsonPayload);
 	let xhr = new XMLHttpRequest();
 	try
 	{
@@ -295,7 +296,6 @@ if (window.location.href.includes("contacts.html"))
 				console.log("saving progress");
 				// toggle edits
 				toggleContactEdits(cRow);
-
 
 				// editContact() API call
 				let res = editContact(grabJSON(cRow));
