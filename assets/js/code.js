@@ -167,15 +167,15 @@ if (window.location.href.includes("contacts.html"))
 		// input: expects a jQuery object of a .contactRow <div> and a JSON object.
 		function putJSON(cRow, json)
 		{
-			cRow.find(".nameInput").val(json["Name"]);
+			cRow.find(".nameInput").text(json["Name"]);
 			cRow.find("input.phoneInput").val(json["Phone"]);
-			cRow.find(".emailInput").val(json["email"]);
+			cRow.find(".emailInput").text(json["email"]);
 			cRow.find("input.streetInput").val(json["Street"]);
 			cRow.find("input.cityInput").val(json["City"]);
 			cRow.find("select.stateInput").val(json["State"]).change();
 			cRow.find("input.zipInput").val(parseInt(json["ZIP"]));
 			cRow.find("select.countryInput").val(json["Country"]).change();
-			cRow.find(".officeInput").val(json["office"]);
+			cRow.find(".officeInput").text(json["office"]);
 			let tmp = getUniqueContactID();
 			let tID = "C" + tmp;
 			console.log("concatenated ID:", tID);
@@ -265,7 +265,7 @@ if (window.location.href.includes("contacts.html"))
 		$('#contactsPane div:first').children('.contactRow').each(function () {
 	    if ($(this).attr("editable") == 1)
 			{
-				console.log("hiding saveCancelGroup");
+				console.log("hiding editInfoGroup");
 				$(this).find(".editInfoGroup:first").hide();
 			}
 			else
