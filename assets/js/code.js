@@ -151,9 +151,12 @@ if (window.location.href.includes("contacts.html"))
 			tmp["ZIP"] = parseInt(cRow.find("input.zipInput").val());
 			tmp["Country"] = cRow.find("select.countryInput option:selected").text();
 			tmp["office"] = cRow.find("input.officeInput").val();
-			tmp["UserID"] = userId;
-		//	var tmp = {login:login,password:hash};
+			// stuff to prune later :)
+			tmp["UserID"] = userId; // for addContact
+			tmp["ID"] = cRow.attr("contactID"); // for editContact
+
 			let res = JSON.stringify( tmp );
+			console.log("grabJSON() -- grabbed", res);
 			return res;
 		}
 
@@ -334,7 +337,7 @@ if (window.location.href.includes("contacts.html"))
 							// make new cRow
 							let tempContact = defaultContact.clone();
 							// fill with info
-							jsonObject.results[i]["contactID"] = getUniqueContactID();
+							jsonObject.results[i]["contactID"] = getUniqueContactID(); // remove soon!
 							console.log(jsonObject.results[i]);
 							putJSON(tempContact, jsonObject.results[i]);
 							// finish functionality and prepend to contactsPane
