@@ -339,10 +339,10 @@ if (window.location.href.includes("contacts.html"))
 				// editContact() API call
 				let res = await editContact(grabJSON(cRow));
 				console.log("save button -- res:", res);
-				if (res["error"] != "")
+				if (JSON.parse(res)["error"] != "")
 				{
 					// TODO: finish this lol
-					console.log("editContact ERROR:", res["error"]);
+					console.log("editContact ERROR:", res);
 					toggleContactEdits(cRow); // turn edits back on
 				}
 				else
