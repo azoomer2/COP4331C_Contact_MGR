@@ -397,7 +397,7 @@ if (window.location.href.includes("contacts.html"))
 							// make new cRow
 							let tempContact = defaultContact.clone();
 							// fill with info
-							jsonObject.results[i]["contactID"] = getUniqueContactID(); // remove soon!
+							jsonObject.results[i]["contactID"] = jsonObject.results[i]["ID"];
 							console.log(jsonObject.results[i]);
 							tempContact.attr("idInitialized", "false");
 							putJSON(tempContact, jsonObject.results[i]);
