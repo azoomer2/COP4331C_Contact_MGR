@@ -193,26 +193,26 @@ if (window.location.href.includes("contacts.html"))
 		{
 			console.log("prepareCRow -- doing this guy:", cRow);
 			// cRow look preparation
-			if ($(this).attr("editable") == 1)
+			if ($(cRow).attr("editable") == 1)
 			{
 				console.log("hiding editInfoGroup");
-				$(this).find(".editInfoGroup:first").hide();
+				$(cRow).find(".editInfoGroup:first").hide();
 			}
 			else
 			{
-				console.log("hiding saveCancelGroup:", this.find(".saveCancelGroup:first"));
-				$(this).find(".saveCancelGroup:first").hide();
+				console.log("hiding saveCancelGroup:", $(cRow).find(".saveCancelGroup:first"));
+				$(cRow).find(".saveCancelGroup:first").hide();
 			}
 
 			// more/less info handler
-			$(this).find(".contactInfoButton:first").click(function () {
+			$(cRow).find(".contactInfoButton:first").click(function () {
 				console.log("more/less info");
 				var $el = $(this);
 				$el.children("label").text($el.children("label").text() == "More Info" ? "Less Info": "More Info");
 			});
 
 			// edit button handler
-			$(this).find(".contactEditButton:first").click(function () {
+			$(cRow).find(".contactEditButton:first").click(function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
 				console.log("edit time :)");
 				let editable = cRow.attr("editable");
@@ -238,7 +238,7 @@ if (window.location.href.includes("contacts.html"))
 			});
 
 			// save button handler
-			$(this).find(".saveButton:first").click(function () {
+			$(cRow).find(".saveButton:first").click(function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
 				// first, make sure they're saving this contact with a name
 				if (cRow.find("input.nameInput").val() == "")
@@ -263,7 +263,7 @@ if (window.location.href.includes("contacts.html"))
 			});
 
 			// cancel button handler
-			$(this).find(".cancelButton:first").click(function () {
+			$(cRow).find(".cancelButton:first").click(function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
 				console.log("cancelling edits");
 				// toggle editability
