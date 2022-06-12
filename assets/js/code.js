@@ -487,7 +487,7 @@ if (window.location.href.includes("contacts.html"))
 	  //   prepareCRow(this);
 		// });
 
-		// add/cancel adding contact handling
+		// add contact button
 		$('#addContactButton').click(function () {
 			console.log("newContact called");
 			blankContact.clone().prependTo($('#contactsPane div:first'));
@@ -498,12 +498,47 @@ if (window.location.href.includes("contacts.html"))
 				console.log("new contact cancelled!");
 				$(this).parentsUntil("div .contactRow").parent().remove();
 			});
+
 			// save button
-			$('#contactsPane div:first .contactRow:first .saveButton:first').click(function () {
-				console.log("new contact saved!");
-				console.log(grabJSON($(this).parentsUntil("div .contactRow").parent()));
-				// $(this).parentsUntil("div .contactRow").parent().remove();
-				toggleContactEdits($(this).parentsUntil("div .contactRow").parent());
+			$('#contactsPane div:first .contactRow:first .saveButton:first').click(async function () {
+				let cRow = $(this).parentsUntil("div .contactRow").parent();
+				console.log("save button clicked!");
+				console.log(grabJSON(cRow));
+
+				// toggle edits and send API call!
+				toggleContactEdits(cRow);
+				let newJSON = grabJSON(cRow);
+				await addContact(newJSON).then(result => {
+					console.log("addContact result:", result);
+					if (result != "Contact added successfully")
+					{
+						// TODO: finish this lol
+						cRow.find(".contactAddResult").text("Try again");
+						console.log("addContact ERROR:", result);
+						toggleContactEdits(cRow); // turn edits back on
+					}
+					else
+					{
+						// TODO: finish this lol
+						console.log("addContact SUCCESS:");
+						cRow.find(".contactAddResult").text("Success...");
+
+						// replace this cRow with a filled in defaultContact
+						// make new cRow
+						let tempContact = defaultContact.clone();
+						// fill with info
+						newJSON["contactID"] = newJSON["ID"];
+						console.log(newJSON);
+						tempContact.attr("idInitialized", "false");
+						putJSON(tempContact, newJSON);
+						// finish functionality and prepend to contactsPane
+						prepareCRow(tempContact);
+						tempContact.prependTo($('#contactsPane div:first'));
+
+						// get rid of old blankContact
+						cRow.remove();
+					}
+				});
 			});
 		})
 
@@ -512,42 +547,35 @@ if (window.location.href.includes("contacts.html"))
 	});
 }
 
-function addContact()
+async function addContact(jsonPayload)
 {
-	let newContact = document.getElementById("contactText").value;
-	document.getElementById("contactAddResult").innerHTML = "";
-
-	let tmp = {contact:newContact,userId,userId};
-	let jsonPayload = JSON.stringify( tmp );
-
 	let url = urlBase + '/AddContact.' + extension;
+	jsonPayload = JSON.parse(jsonPayload);
+	console.log("addContact, jsonPayload:", jsonPayload);
 
-	let xhr = new XMLHttpRequest();
-	try
-	{
-		xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-	}
-	catch(err)
-	{
-		document.getElementById("contactAddResult").innerHTML = err.message;
-	}
-	try
-	{
-		xhr.onreadystatechange = function()
-		{
-			if (this.readyState == 4 && this.status == 200)
-			{
-				document.getElementById("contactAddResult").innerHTML = "Contact has been added";
-			}
-		};
-		xhr.send(jsonPayload);
-	}
-	catch(err)
-	{
-		document.getElementById("contactAddResult").innerHTML = err.message;
-	}
-
+	return new Promise(function (resolve, reject) {
+        let xhr = new XMLHttpRequest();
+				xhr.open("POST", url);
+				xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        xhr.onload = function () {
+            if (this.status >= 200 && this.status < 300) {
+							console.log("add contact success!");              resolve(xhr.response);
+            } else {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            }
+        };
+        xhr.onerror = function () {
+						console.log("add contact fail.");
+            reject({
+                status: this.status,
+                statusText: xhr.statusText
+            });
+        };
+        xhr.send(JSON.stringify(jsonPayload));
+    });
 }
 
 // function newContact()
