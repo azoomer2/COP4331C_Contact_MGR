@@ -153,7 +153,7 @@ if (window.location.href.includes("contacts.html"))
 			tmp["office"] = cRow.find("input.officeInput").val();
 			// stuff to prune later :)
 			tmp["UserID"] = userId; // for addContact
-			tmp["ID"] = cRow.attr("contactID"); // for editContact
+			tmp["contactID"] = cRow.attr("contactID"); // for editContact
 
 			let res = JSON.parse( tmp ); // should be JSON.stringify() before sending off
 			console.log("grabJSON() -- grabbed", res);
@@ -182,15 +182,19 @@ if (window.location.href.includes("contacts.html"))
 			cRow.find("input.zipInput").val(parseInt(json["ZIP"]));
 			cRow.find("select.countryInput").val(json["Country"]).change();
 			cRow.find(".officeInput").val(json["office"]);
-			let tmp = json["contactID"];
-			let tID = "C" + tmp;
-			console.log("concatenated ID:", tID);
-			cRow.attr("contactID", tmp);
-			cRow.find("button[data-bs-target='#C1']").attr("data-bs-target", "#"+tID);
-			cRow.find("div#C1").attr('id', tID);
-			console.log("new collapse ID:", cRow.find("#"+tID).attr('id'), tmp);
-			console.log("id find results:", cRow.find("#"+tID));
-			console.log("cRow:", cRow);
+			if (cRow.attr("idInitialized") == "false")
+			{
+				let tmp = json["contactID"];
+				let tID = "C" + tmp;
+				console.log("concatenated ID:", tID);
+				cRow.attr("contactID", tmp);
+				cRow.find("button[data-bs-target='#C1']").attr("data-bs-target", "#"+tID);
+				cRow.find("div#C1").attr('id', tID);
+				console.log("new collapse ID:", cRow.find("#"+tID).attr('id'), tmp);
+				console.log("id find results:", cRow.find("#"+tID));
+				cRow.attr("idInitialized", "true");
+			}
+			console.log("putJSON cRow:", cRow);
 		}
 
 		// takes a cRow and hides the buttons unneeded in its current state.
@@ -275,8 +279,9 @@ if (window.location.href.includes("contacts.html"))
 				// toggle editability
 				toggleContactEdits(cRow);
 				// return to previous state
-				console.log("cancel button confirm -- sends to", $(cRow).data('oldState'));
-				putJSON(cRow, JSON.parse(cRow.data('oldState')));
+				let putBack = JSON.parse(cRow.data('oldState');
+				console.log("cancel button confirm -- sends to", putBack);
+				putJSON(cRow, putBack));
 				// swap button groups
 				cRow.find(".saveCancelGroup:first").hide();
 				cRow.find(".editInfoGroup:first").show();
@@ -342,6 +347,7 @@ if (window.location.href.includes("contacts.html"))
 							// fill with info
 							jsonObject.results[i]["contactID"] = getUniqueContactID(); // remove soon!
 							console.log(jsonObject.results[i]);
+							cRow.attr("idInitialized", "false");
 							putJSON(tempContact, jsonObject.results[i]);
 							// finish functionality and prepend to contactsPane
 							prepareCRow(tempContact);
