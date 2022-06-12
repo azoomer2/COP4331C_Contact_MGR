@@ -347,7 +347,7 @@ if (window.location.href.includes("contacts.html"))
 							// fill with info
 							jsonObject.results[i]["contactID"] = getUniqueContactID(); // remove soon!
 							console.log(jsonObject.results[i]);
-							cRow.attr("idInitialized", "false");
+							tempContact.attr("idInitialized", "false");
 							putJSON(tempContact, jsonObject.results[i]);
 							// finish functionality and prepend to contactsPane
 							prepareCRow(tempContact);
