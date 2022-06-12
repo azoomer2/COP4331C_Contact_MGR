@@ -191,6 +191,7 @@ if (window.location.href.includes("contacts.html"))
 		// meant for page startup.
 		function prepareCRow(cRow)
 		{
+			console.log("prepareCRow -- doing this guy:", cRow);
 			// cRow look preparation
 			if ($(this).attr("editable") == 1)
 			{
