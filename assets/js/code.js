@@ -463,8 +463,11 @@ if (window.location.href.includes("contacts.html"))
 			}
 
 		}
+
 		// bind search button to searchContact()
-		$("#searchButton").click(searchContact());
+		$("#searchButton:first").click(function () {
+			searchContact();
+		});
 
 
 		// add defaultContact rq for testing
