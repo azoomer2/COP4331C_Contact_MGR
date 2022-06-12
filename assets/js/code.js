@@ -155,7 +155,7 @@ if (window.location.href.includes("contacts.html"))
 			tmp["UserID"] = userId; // for addContact
 			tmp["ID"] = cRow.attr("contactID"); // for editContact
 
-			let res = JSON.stringify( tmp );
+			let res = JSON.parse( tmp ); // should be JSON.stringify() before sending off
 			console.log("grabJSON() -- grabbed", res);
 			return res;
 		}
@@ -171,6 +171,7 @@ if (window.location.href.includes("contacts.html"))
 		// input: expects a jQuery object of a .contactRow <div> and a JSON object.
 		function putJSON(cRow, json)
 		{
+			console.log("putJSON -- putting", json, "into", cRow);
 			cRow.find(".nameInput").val(json["Name"]);
 			cRow.find("input.phoneInput").val(json["Phone"]);
 			cRow.find(".emailInput").val(json["email"]);
