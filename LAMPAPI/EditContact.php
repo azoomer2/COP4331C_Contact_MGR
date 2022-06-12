@@ -1,5 +1,17 @@
 <?php
 
+	$inData = getRequestInfo();
+	$ID = $inData["ID"];
+	$Name = $inData["Name"];
+	$Phone = $inData["Phone"];
+	$email = $inData["email"];
+  	$Street = $inData["Street"];
+	$City = $inData["City"];
+	$State = $inData["State"];
+	$ZIP = $inData["ZIP"];
+	$Country = $inData["Country"];
+ 	$office = $inData["office"];
+
 	$conn = new mysqli("localhost", "root", "cop43312", "COP4331");
 	if ($conn->connect_error)
 	{
@@ -7,19 +19,6 @@
 	}
 	else
 	{
-		$ID = $_POST['ID'];
-
-		// get user input for new contact information
-		$Name = $_POST['Name'];
-		$Phone = $_POST['Phone'];
-		$email = $_POST['email'];
-		$Street = $_POST['Street'];
-		$City = $_POST['City'];
-		$State = $_POST['State'];
-		$ZIP = $_POST['ZIP'];
-		$Country = $_POST['Country'];
-		$office = $_POST['office'];
-
 		// update contact with given user input
 		$stmt = $conn->prepare("UPDATE Contacts SET
 			Name = '$Name',
@@ -31,7 +30,7 @@
 			ZIP = '$ZIP',
 			Country = '$Country',
 			office = '$office'
-			WHERE ID = '$ID'");
+			WHERE(ID = '$ID')");
 		$stmt->execute();
 
 		if($conn->affected_rows > 0)
@@ -54,5 +53,9 @@
 		sendResultInfoAsJson( $retValue );
 	}
 
+	function getRequestInfo()
+	{
+		return json_decode(file_get_contents('php://input'), true);
+	}
 
  ?>
