@@ -124,6 +124,7 @@ function doLogout()
 // returns: the POST results.
 function editContact(jsonPayload)
 {
+	let retval = {};
 	let url = urlBase + '/AddContact.' + extension;
 	jsonPayload["ID"] = jsonPayload["contactID"]
 	jsonPayload = JSON.stringify(jsonPayload);
@@ -136,9 +137,8 @@ function editContact(jsonPayload)
 	}
 	catch(err)
 	{
-		let res = {};
-		res["error"] = err.message;
-		return res;
+		retval["error"] = err.message;
+		return retval;
 	}
 	try
 	{
@@ -146,20 +146,19 @@ function editContact(jsonPayload)
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				let res = {};
-				res["success"] = "Contact has been edited";
-				return res;
+
+				retval["success"] = "Contact has been edited";
 			}
 		};
 		xhr.send(jsonPayload);
 	}
 	catch(err)
 	{
-		let res = {};
-		res["error"] = err.message;
-		return res;
+		retval["error"] = err.message;
+		return retval;
 	}
 
+	return retval;
 }
 
 if (window.location.href.includes("contacts.html"))
