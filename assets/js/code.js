@@ -225,7 +225,7 @@ if (window.location.href.includes("contacts.html"))
 			$(cRow).find(".contactEditButton:first").click(function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
 				console.log("edit time :)");
-				let edit0.able = cRow.attr("editable");
+				let editable = cRow.attr("editable");
 				console.log(editable);
 				// if window already expanded, keep it expanded
 				let infoButtonText = $(this).parent().find(".contactInfoButton label").text();
