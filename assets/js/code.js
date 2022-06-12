@@ -199,7 +199,7 @@ async function editContact(jsonPayload)
                 statusText: xhr.statusText
             });
         };
-        xhr.send(jsonPayload);
+        xhr.send(JSON.stringify(jsonPayload));
     });
 }
 
