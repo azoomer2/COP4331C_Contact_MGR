@@ -171,7 +171,8 @@ if (window.location.href.includes("contacts.html"))
 		// input: expects a jQuery object of a .contactRow <div> and a JSON object.
 		function putJSON(cRow, json)
 		{
-			console.log("putJSON -- putting", json, "into", cRow);
+			console.log("putJSON -- putting", json);
+			console.log("into", cRow);
 			cRow.find(".nameInput").val(json["Name"]);
 			cRow.find("input.phoneInput").val(json["Phone"]);
 			cRow.find(".emailInput").val(json["email"]);
@@ -270,12 +271,12 @@ if (window.location.href.includes("contacts.html"))
 			// cancel button handler
 			$(cRow).find(".cancelButton:first").click(function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
-				console.log("cancelling edits");
+				console.log("cancelling edits for", cRow);
 				// toggle editability
 				toggleContactEdits(cRow);
 				// return to previous state
 				console.log("cancel button confirm -- sends to", $(cRow).data('oldState'));
-				putJSON($(cRow), $(cRow).data('oldState'));
+				putJSON(cRow, cRow.data('oldState'));
 				// swap button groups
 				cRow.find(".saveCancelGroup:first").hide();
 				cRow.find(".editInfoGroup:first").show();
