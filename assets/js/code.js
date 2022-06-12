@@ -200,7 +200,7 @@ if (window.location.href.includes("contacts.html"))
 			}
 			else
 			{
-				console.log("hiding saveCancelGroup:", $(this).find(".saveCancelGroup:first"));
+				console.log("hiding saveCancelGroup:", this.find(".saveCancelGroup:first"));
 				$(this).find(".saveCancelGroup:first").hide();
 			}
 
