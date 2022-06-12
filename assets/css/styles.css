@@ -213,11 +213,13 @@ html, body {
   border: 0;
   color: black;
 }
+
 #contactsPane input::placeholder {
   color: var(--ucf--gray);
   font-style: italic;
 }
+
 #contactsPane select:disabled {
-  border: none;
+  border: 0;
   color: black;
 }

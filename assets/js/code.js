@@ -234,8 +234,8 @@ if (window.location.href.includes("contacts.html"))
 				// now, make contact editable
 				toggleContactEdits(cRow);
 				// swap edit/info buttons with save/cancel buttons
-				cRow.children(".editInfoGroup").hide();
-				cRow.children(".saveCancelGroup").show();
+				cRow.find(".editInfoGroup:first").hide();
+				cRow.find(".saveCancelGroup:first").show();
 			});
 
 			// save button handler
@@ -272,8 +272,8 @@ if (window.location.href.includes("contacts.html"))
 				// return to previous state
 				putJSON(cRow, $(cRow).data('oldState'));
 				// swap button groups
-				cRow.children(".saveCancelGroup").hide();
-				cRow.children(".editInfoGroup").show();
+				cRow.find(".saveCancelGroup:first").hide();
+				cRow.find(".editInfoGroup:first").show();
 			});
 		}
 
