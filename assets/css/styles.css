@@ -208,3 +208,16 @@ html, body {
   -webkit-text-stroke: 1px white;
   -webkit-text-fill-color: #fc0303;
 }
+
+#contactsPane input:read-only {
+  border: none;
+  color: black;
+}
+#contactsPane input::placeholder {
+  color: var(--ucf--gray);
+  font-style: italic;
+}
+#contactsPane select:disabled {
+  border: none;
+  color: black;
+}

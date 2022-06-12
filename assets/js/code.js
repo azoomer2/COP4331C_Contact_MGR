@@ -285,13 +285,13 @@ if (window.location.href.includes("contacts.html"))
 			if (cRow.attr("editable") == 0) {
 				cRow.attr("editable", 1);
 				// make inputs all editable
-				cRow.find("input").prop("disabled", false);
+				cRow.find("input").prop("readonly", false);
 				cRow.find("select").prop("disabled", false);
 			}
 			else {
 				cRow.attr("editable", 0);
 				// disable all input boxes
-				cRow.find("input").prop("disabled", true);
+				cRow.find("input").prop("readonly", true);
 				cRow.find("select").prop("disabled", true);
 			}
 		}
