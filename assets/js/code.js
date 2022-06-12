@@ -205,14 +205,14 @@ if (window.location.href.includes("contacts.html"))
 			}
 
 			// more/less info handler
-			$("this.contactInfoButton").click(function () {
+			$(this).find(".contactInfoButton:first").click(function () {
 				console.log("more/less info");
 				var $el = $(this);
 				$el.children("label").text($el.children("label").text() == "More Info" ? "Less Info": "More Info");
 			});
 
 			// edit button handler
-			$("this.contactEditButton").click(function () {
+			$(this).find(".contactEditButton:first").click(function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
 				console.log("edit time :)");
 				let editable = cRow.attr("editable");
@@ -238,7 +238,7 @@ if (window.location.href.includes("contacts.html"))
 			});
 
 			// save button handler
-			$("this.saveButton").click(function () {
+			$(this).find(".saveButton:first").click(function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
 				// first, make sure they're saving this contact with a name
 				if (cRow.find("input.nameInput").val() == "")
@@ -263,7 +263,7 @@ if (window.location.href.includes("contacts.html"))
 			});
 
 			// cancel button handler
-			$("this.cancelButton").click(function () {
+			$(this).find(".cancelButton:first").click(function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
 				console.log("cancelling edits");
 				// toggle editability
