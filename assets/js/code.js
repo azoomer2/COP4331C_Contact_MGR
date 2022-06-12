@@ -177,10 +177,10 @@ if (window.location.href.includes("contacts.html"))
 			cRow.find("input.zipInput").val(parseInt(json["ZIP"]));
 			cRow.find("select.countryInput").val(json["Country"]).change();
 			cRow.find(".officeInput").val(json["office"]);
-			let tmp = getUniqueContactID();
+			let tmp = json["contactID"];
 			let tID = "C" + tmp;
 			console.log("concatenated ID:", tID);
-			cRow.attr("contactID", tmp); // will later be json["id"]
+			cRow.attr("contactID", tmp);
 			cRow.find("button[data-bs-target='#C1']").attr("data-bs-target", "#"+tID);
 			cRow.find("div#C1").attr('id', tID);
 			console.log("new collapse ID:", cRow.find("#"+tID).attr('id'), tmp);
@@ -334,6 +334,7 @@ if (window.location.href.includes("contacts.html"))
 							// make new cRow
 							let tempContact = defaultContact.clone();
 							// fill with info
+							jsonObject.results[i]["contactID"] = getUniqueContactID();
 							console.log(jsonObject.results[i]);
 							putJSON(tempContact, jsonObject.results[i]);
 							// finish functionality and prepend to contactsPane
