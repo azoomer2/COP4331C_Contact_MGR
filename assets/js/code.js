@@ -338,7 +338,7 @@ if (window.location.href.includes("contacts.html"))
 
 				// editContact() API call
 				let result
-				let res = await editContact(grabJSON(cRow)).then(result => console.log(result.data));
+				let res = await editContact(grabJSON(cRow)).then(result => {console.log(result.data);});
 				console.log("save button -- res:", res.data);
 				if (JSON.parse()["error"] != "")
 				{
