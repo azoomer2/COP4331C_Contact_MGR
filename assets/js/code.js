@@ -133,7 +133,7 @@ function editContact(jsonPayload)
 	let xhr = new XMLHttpRequest();
 	try
 	{
-		xhr.open("POST", url, true);
+		xhr.open("POST", url, false);
 		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 	}
 	catch(err)
