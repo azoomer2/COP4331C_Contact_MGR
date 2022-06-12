@@ -127,7 +127,7 @@ function editContact(jsonPayload)
 	let retval = {};
 	let url = urlBase + '/AddContact.' + extension;
 	jsonPayload["ID"] = jsonPayload["contactID"]
-	jsonPayload = JSON.stringify(jsonPayload);
+	jsonPayload = JSON.parse(jsonPayload);
 
 	let xhr = new XMLHttpRequest();
 	try
