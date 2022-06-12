@@ -294,8 +294,6 @@ if (window.location.href.includes("contacts.html"))
 				// toggle edits
 				toggleContactEdits(cRow);
 
-				// discard oldState
-				$(cRow).removeData('oldState');
 
 				// editContact() API call
 				let res = editContact(grabJSON(cRow));
@@ -313,6 +311,9 @@ if (window.location.href.includes("contacts.html"))
 					// swap edit/info buttons with save/cancel buttons
 					cRow.find(".saveCancelGroup:first").hide();
 					cRow.find(".editInfoGroup:first").show();
+
+					// discard oldState
+					$(cRow).removeData('oldState');
 				}
 			});
 
