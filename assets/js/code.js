@@ -528,7 +528,7 @@ if (window.location.href.includes("contacts.html"))
 						let tempContact = defaultContact.clone();
 						// fill with info
 						newJSON["contactID"] = newJSON["ID"];
-						console.log(newJSON);
+						console.log("newJSON for replacement cRow:", newJSON);
 						tempContact.attr("idInitialized", "false");
 						putJSON(tempContact, newJSON);
 						// finish functionality and prepend to contactsPane
@@ -541,9 +541,6 @@ if (window.location.href.includes("contacts.html"))
 				});
 			});
 		})
-
-
-
 	});
 }
 
