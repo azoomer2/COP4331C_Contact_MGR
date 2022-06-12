@@ -122,7 +122,7 @@ function doLogout()
 // sends API call with required JSON.
 // input: correct JSON structure.
 // returns: the POST results.
-function editContact(jsonPayload)
+async function editContact(jsonPayload)
 {
 	let retval = {"error":"","success":""};
 	let url = urlBase + '/AddContact.' + extension;
@@ -133,7 +133,7 @@ function editContact(jsonPayload)
 	let xhr = new XMLHttpRequest();
 	try
 	{
-		xhr.open("POST", url, false);
+		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 	}
 	catch(err)
@@ -151,7 +151,7 @@ function editContact(jsonPayload)
 				console.log("success!");
 				retval["success"] = "Contact has been edited";
 				console.log("successful retval:", retval);
-				return retval;
+
 			}
 		};
 		xhr.send(jsonPayload);
@@ -162,6 +162,13 @@ function editContact(jsonPayload)
 		retval["error"] = err.message;
 		return retval;
 	}
+
+	// jank taken from sitepoint.com
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	await sleep(300);
+	return retval;
 }
 
 if (window.location.href.includes("contacts.html"))
