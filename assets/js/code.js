@@ -187,6 +187,111 @@ if (window.location.href.includes("contacts.html"))
 			console.log("cRow:", cRow);
 		}
 
+		// takes a cRow and hides the buttons unneeded in its current state.
+		// meant for page startup.
+		function prepareCRow(cRow)
+		{
+			// cRow look preparation
+			if ($(this).attr("editable") == 1)
+			{
+				console.log("hiding editInfoGroup");
+				$(this).find(".editInfoGroup:first").hide();
+			}
+			else
+			{
+				console.log("hiding saveCancelGroup");
+				$(this).find(".saveCancelGroup:first").hide();
+			}
+
+			// more/less info handler
+			$("this.contactInfoButton").click(function () {
+				console.log("more/less info");
+				var $el = $(this);
+				$el.children("label").text($el.children("label").text() == "More Info" ? "Less Info": "More Info");
+			});
+
+			// edit button handler
+			$("this.contactEditButton").click(function () {
+				let cRow = $(this).parentsUntil("div .contactRow").parent();
+				console.log("edit time :)");
+				let editable = cRow.attr("editable");
+				console.log(editable);
+				// if window already expanded, keep it expanded
+				let infoButtonText = $(this).parent().find(".contactInfoButton label").text();
+				console.log(infoButtonText);
+				if (editable == 0 && infoButtonText == "More Info") {
+					var inf = $(this).parent().children(".contactInfoButton");
+					inf.trigger('click');
+				}
+
+				// save current entered info
+				$(cRow).data('oldState',grabJSON(cRow));
+				console.log("CROW DATA:");
+				console.log($(cRow).data('oldState'));
+
+				// now, make contact editable
+				toggleContactEdits(cRow);
+				// swap edit/info buttons with save/cancel buttons
+				cRow.children(".editInfoGroup").hide();
+				cRow.children(".saveCancelGroup").show();
+			});
+
+			// save button handler
+			$("this.saveButton").click(function () {
+				let cRow = $(this).parentsUntil("div .contactRow").parent();
+				// first, make sure they're saving this contact with a name
+				if (cRow.find("input.nameInput").val() == "")
+				{
+					alert("ERROR: Contacts need a name.");
+					return;
+				}
+				console.log("saving progress");
+				// toggle edits
+				toggleContactEdits(cRow);
+
+				// discard oldState
+				$(cRow).removeData('oldState');
+
+				// editContact() API call
+				let res = editContact(grabJSON(cRow));
+				if (res["error"] != "")
+				{
+					// TODO: finish this lol
+				}
+
+			});
+
+			// cancel button handler
+			$("this.cancelButton").click(function () {
+				let cRow = $(this).parentsUntil("div .contactRow").parent();
+				console.log("cancelling edits");
+				// toggle editability
+				toggleContactEdits(cRow);
+				// return to previous state
+				putJSON(cRow, $(cRow).data('oldState'));
+				// swap button groups
+				cRow.children(".saveCancelGroup").hide();
+				cRow.children(".editInfoGroup").show();
+			});
+		}
+
+		// toggles editable attribute & makes contact editable.
+		// input: expects a jQuery object of a .contactRow <div>.
+		function toggleContactEdits(cRow)
+		{
+			//console.log(cRow);
+			if (cRow.attr("editable") == 0) {
+				cRow.attr("editable", 1);
+				// make inputs all editable
+				cRow.children("input").prop("disabled", false);
+			}
+			else {
+				cRow.attr("editable", 0);
+				// disable all input boxes
+				cRow.children("input").prop("disabled", true);
+			}
+		}
+
 		function searchContact()
 		{
 			let srch = document.getElementById("searchText").value;
@@ -227,14 +332,9 @@ if (window.location.href.includes("contacts.html"))
 							// fill with info
 							console.log(jsonObject.results[i]);
 							putJSON(tempContact, jsonObject.results[i]);
-							// prepend to contactsPane
+							// finish functionality and prepend to contactsPane
+							prepareCRow(tempContact);
 							tempContact.prependTo($('#contactsPane div:first'));
-
-							// contactList += jsonObject.results[i];
-							// if( i < jsonObject.results.length - 1 )
-							// {
-							// 	contactList += "<br />\r\n";
-							// }
 						}
 
 						//document.getElementsByTagName("p")[0].innerHTML = contactList;
@@ -257,94 +357,14 @@ if (window.location.href.includes("contacts.html"))
 		var inf = $('#contactsPane div:first .contactRow:first').find(".contactInfoButton");
 		inf.trigger('click');
 
-		// populate screen with blank search results
+		// populate screen with search results
 		console.log("searchContact called");
 		searchContact();
 
-		// hide buttongroups not in use
-		$('#contactsPane div:first').children('.contactRow').each(function () {
-	    if ($(this).attr("editable") == 1)
-			{
-				console.log("hiding editInfoGroup");
-				$(this).find(".editInfoGroup:first").hide();
-			}
-			else
-			{
-				console.log("hiding saveCancelGroup");
-				$(this).find(".saveCancelGroup:first").hide();
-			}
-	});
-
-		// more/less info handler
-		$(".contactInfoButton").click(function () {
-			console.log("more/less info");
-		  var $el = $(this);
-		  $el.children("label").text($el.children("label").text() == "More Info" ? "Less Info": "More Info");
-		});
-
-		// edit button handler
-		$(".contactEditButton").click(function () {
-			let cRow = $(this).parentsUntil("div .contactRow").parent();
-			console.log("edit time :)");
-			let editable = cRow.attr("editable");
-			console.log(editable);
-			// if window already expanded, keep it expanded
-			let infoButtonText = $(this).parent().find(".contactInfoButton label").text();
-		  console.log(infoButtonText);
-			if (editable == 0 && infoButtonText == "More Info") {
-				var inf = $(this).parent().children(".contactInfoButton");
-				inf.trigger('click');
-			}
-
-			// save current entered info
-			$(cRow).data('oldState',grabJSON(cRow));
-			console.log("CROW DATA:");
-			console.log($(cRow).data('oldState'));
-
-			// now, make contact editable
-			toggleContactEdits(cRow);
-			// swap edit/info buttons with save/cancel buttons
-			cRow.children(".editInfoGroup").hide();
-			cRow.children(".saveCancelGroup").show();
-		});
-
-		// save button handler
-		$(".saveButton").click(function () {
-			let cRow = $(this).parentsUntil("div .contactRow").parent();
-			// first, make sure they're saving this contact with a name
-			if (cRow.find("input.nameInput").val() == "")
-			{
-				alert("ERROR: Contacts need a name.");
-				return;
-			}
-			console.log("saving progress");
-			// toggle edits
-			toggleContactEdits(cRow);
-
-			// discard oldState
-			$(cRow).removeData('oldState');
-
-			// editContact() API call
-			let res = editContact(grabJSON(cRow));
-			if (res["error"] != "")
-			{
-				// TODO: finish this lol
-			}
-
-		});
-
-		// cancel button handler
-		$(".cancelButton").click(function () {
-			let cRow = $(this).parentsUntil("div .contactRow").parent();
-			console.log("cancelling edits");
-			// toggle editability
-			toggleContactEdits(cRow);
-			// return to previous state
-			putJSON(cRow, $(cRow).data('oldState'));
-			// swap button groups
-			cRow.children(".saveCancelGroup").hide();
-			cRow.children(".editInfoGroup").show();
-		});
+		// // hide buttongroups not in use
+		// $('#contactsPane div:first').children('.contactRow').each(function () {
+	  //   prepareCRow(this);
+		// });
 
 		// add/cancel adding contact handling
 		$('#addContactButton').click(function () {
@@ -366,22 +386,7 @@ if (window.location.href.includes("contacts.html"))
 			});
 		})
 
-		// toggles editable attribute & makes contact editable.
-		// input: expects a jQuery object of a .contactRow <div>.
-		function toggleContactEdits(cRow)
-		{
-			//console.log(cRow);
-			if (cRow.attr("editable") == 0) {
-				cRow.attr("editable", 1);
-				// make inputs all editable
-				cRow.children("input").prop("disabled", false);
-			}
-			else {
-				cRow.attr("editable", 0);
-				// disable all input boxes
-				cRow.children("input").prop("disabled", true);
-			}
-		}
+
 
 	});
 }
