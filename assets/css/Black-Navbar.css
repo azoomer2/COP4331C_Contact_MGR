@@ -102,3 +102,8 @@
   font-weight: 400;
 }
 
+#userName {
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-top: 13px;
+}
