@@ -150,7 +150,6 @@ async function editContact(jsonPayload)
 			{
 				console.log("success!");
 				retval["success"] = "Contact has been edited";
-				console.log("successful retval:", retval);
 
 			}
 		};
@@ -167,7 +166,8 @@ async function editContact(jsonPayload)
 	function sleep(ms) {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
-	await sleep(300);
+	await sleep(400); // manual 400ms delay in code :*)
+	console.log("successful retval:", retval);
 	return retval;
 }
 
