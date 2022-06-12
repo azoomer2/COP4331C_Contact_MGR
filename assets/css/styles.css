@@ -210,7 +210,7 @@ html, body {
 }
 
 #contactsPane input:read-only {
-  border: none;
+  border: 0;
   color: black;
 }
 #contactsPane input::placeholder {
@@ -218,6 +218,6 @@ html, body {
   font-style: italic;
 }
 #contactsPane select:disabled {
-  border: none;
+  border: 0;
   color: black;
 }
