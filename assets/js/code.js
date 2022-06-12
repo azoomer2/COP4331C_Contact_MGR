@@ -273,6 +273,7 @@ if (window.location.href.includes("contacts.html"))
 				// toggle editability
 				toggleContactEdits(cRow);
 				// return to previous state
+				console.log("cancel button confirm -- sends to", $(cRow).data('oldState'));
 				putJSON(cRow, $(cRow).data('oldState'));
 				// swap button groups
 				cRow.find(".saveCancelGroup:first").hide();
