@@ -324,12 +324,17 @@ if (window.location.href.includes("contacts.html"))
 				// toggle editability
 				toggleContactEdits(cRow);
 				// return to previous state
-				let putBack = JSON.stringify(cRow.data('oldState'));
+				let putBack = JSON.parse(cRow.data('oldState'));
 				console.log("cancel button confirm -- sends to", putBack);
-				putJSON(cRow, putBack);
-				// swap button groups
-				cRow.find(".saveCancelGroup:first").hide();
-				cRow.find(".editInfoGroup:first").show();
+				try {
+					putJSON(cRow, putBack);
+					// swap button groups
+					cRow.find(".saveCancelGroup:first").hide();
+					cRow.find(".editInfoGroup:first").show();
+				} catch (e) {
+					console.log("cancel button ERROR:");
+					console.log(e);
+				}
 			});
 		}
 
