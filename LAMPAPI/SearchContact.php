@@ -12,23 +12,43 @@
 	}
 	else
 	{
-		$stmt = $conn->prepare("SELECT * FROM Contacts where Name like ? and UserID=?");
-		$contactName = "%" . $inData["search"] . "%";
-		$stmt->bind_param("ss", $contactName, $inData["UserID"]);
-		$stmt->execute();
-
-		$result = $stmt->get_result();
-
-		while($row = $result->fetch_assoc())
-		{
-			if( $searchCount > 0 )
-			{
-				$searchResults .= ",";
-			}
-			$searchCount++;
-			$searchResults .= '{"Name": "' . $row["Name"]. '", "Phone": "' . $row["Phone"]. '", "email": "' . $row["email"]. '", "Street": "' . $row["Street"]. '", "City": "' . $row["City"]. '", "State": "' . $row["State"]. '", "ZIP": "' . $row["ZIP"]. '", "Country": "' . $row["Country"]. '", "office": "' . $row["office"]. '", "ID": "' . $row["ID"]. '"}';
-		}
-
+    if ($inData["search"] == "*")
+    {
+      $stmt = $conn->prepare("SELECT * FROM Contacts where UserID=?");
+  		$stmt->bind_param("s", $inData["UserID"]);
+  		$stmt->execute();
+     
+      $result = $stmt->get_result();
+    }
+    else if ($inData["search"] == "")
+    {
+      $stmt = $conn->prepare("SELECT * FROM Contacts where UserID=? LIMIT 10");
+  		$stmt->bind_param("s", $inData["UserID"]);
+  		$stmt->execute();
+     
+      $result = $stmt->get_result();
+    }
+    
+    else
+    {
+  		$stmt = $conn->prepare("SELECT * FROM Contacts where Name like ? and UserID=?");
+  		$contactName = "%" . $inData["search"] . "%";
+  		$stmt->bind_param("ss", $contactName, $inData["UserID"]);
+  		$stmt->execute();
+  
+  		$result = $stmt->get_result();
+    }
+    
+ 		while($row = $result->fetch_assoc())
+  		{
+  			if( $searchCount > 0 )
+  			{
+  				$searchResults .= ",";
+  			}
+  			$searchCount++;
+  			$searchResults .= '{"Name": "' . $row["Name"]. '", "Phone": "' . $row["Phone"]. '", "email": "' . $row["email"]. '", "Street": "' . $row["Street"]. '", "City": "' . $row["City"]. '", "State": "' . $row["State"]. '", "ZIP": "' . $row["ZIP"]. '", "Country": "' . $row["Country"]. '", "office": "' . $row["office"]. '", "ID": "' . $row["ID"]. '"}';
+  		}
+  
 		if( $searchCount == 0 )
 		{
 			returnWithError( "No Records Found" );
