@@ -303,6 +303,7 @@ if (window.location.href.includes("contacts.html"))
 				{
 					// TODO: finish this lol
 					console.log("editContact ERROR:", res["error"]);
+					toggleContactEdits(cRow); // turn edits back on
 				}
 				else if (res["success"] != "")
 				{
