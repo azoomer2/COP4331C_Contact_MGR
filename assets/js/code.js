@@ -221,7 +221,7 @@ if (window.location.href.includes("contacts.html"))
 			$(cRow).find(".contactEditButton:first").click(function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
 				console.log("edit time :)");
-				let editable = cRow.attr("editable");
+				let edit0.able = cRow.attr("editable");
 				console.log(editable);
 				// if window already expanded, keep it expanded
 				let infoButtonText = $(this).parent().find(".contactInfoButton label").text();
@@ -276,7 +276,7 @@ if (window.location.href.includes("contacts.html"))
 				toggleContactEdits(cRow);
 				// return to previous state
 				console.log("cancel button confirm -- sends to", $(cRow).data('oldState'));
-				putJSON(cRow, cRow.data('oldState'));
+				putJSON(cRow, JSON.parse(cRow.data('oldState')));
 				// swap button groups
 				cRow.find(".saveCancelGroup:first").hide();
 				cRow.find(".editInfoGroup:first").show();
