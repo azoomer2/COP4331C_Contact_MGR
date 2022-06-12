@@ -174,7 +174,7 @@ async function editContactOld(jsonPayload)
 async function editContact(jsonPayload)
 {
 	let url = urlBase + '/AddContact.' + extension;
-	jsonPayload["ID"] = jsonPayload["contactID"]
+	jsonPayload["ID"] = jsonPayload["contactID"];
 	jsonPayload = JSON.parse(jsonPayload);
 	console.log("editContact, jsonPayload:", jsonPayload);
 
