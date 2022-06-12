@@ -124,6 +124,41 @@ function doLogout()
 // returns: the POST results.
 function editContact(jsonPayload)
 {
+	let url = urlBase + '/AddContact.' + extension;
+	jsonPayload["ID"] = jsonPayload["contactID"]
+	jsonPayload = JSON.stringify(jsonPayload);
+
+	let xhr = new XMLHttpRequest();
+	try
+	{
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	}
+	catch(err)
+	{
+		let res = {};
+		res["error"] = err.message;
+		return res;
+	}
+	try
+	{
+		xhr.onreadystatechange = function()
+		{
+			if (this.readyState == 4 && this.status == 200)
+			{
+				let res = {};
+				res["success"] = "Contact has been edited";
+				return res;
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		let res = {};
+		res["error"] = err.message;
+		return res;
+	}
 
 }
 
@@ -268,8 +303,17 @@ if (window.location.href.includes("contacts.html"))
 				if (res["error"] != "")
 				{
 					// TODO: finish this lol
+					console.log("editContact ERROR:", res["error"]);
 				}
+				else if (res["success"] != "")
+				{
+					// TODO: finish this lol
+					console.log("editContact SUCCESS:", res["success"]);
 
+					// swap edit/info buttons with save/cancel buttons
+					cRow.find(".saveCancelGroup:first").hide();
+					cRow.find(".editInfoGroup:first").show();
+				}
 			});
 
 			// cancel button handler
