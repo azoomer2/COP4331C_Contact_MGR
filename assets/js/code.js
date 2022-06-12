@@ -171,6 +171,31 @@ async function editContact(jsonPayload)
 	return retval;
 }
 
+async function editContact2(jsonPayload)
+{
+	return new Promise(function (resolve, reject) {
+        let xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+        xhr.onload = function () {
+            if (this.status >= 200 && this.status < 300) {
+                resolve(xhr.response);
+            } else {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            }
+        };
+        xhr.onerror = function () {
+            reject({
+                status: this.status,
+                statusText: xhr.statusText
+            });
+        };
+        xhr.send();
+    });
+}
+
 if (window.location.href.includes("contacts.html"))
 {
 	$(document).ready(function(){
@@ -292,7 +317,7 @@ if (window.location.href.includes("contacts.html"))
 			});
 
 			// save button handler
-			$(cRow).find(".saveButton:first").click(function () {
+			$(cRow).find(".saveButton:first").click(async function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
 				// first, make sure they're saving this contact with a name
 				if (cRow.find("input.nameInput").val() == "")
@@ -305,7 +330,7 @@ if (window.location.href.includes("contacts.html"))
 				toggleContactEdits(cRow);
 
 				// editContact() API call
-				let res = editContact(grabJSON(cRow));
+				let res = await editContact(grabJSON(cRow));
 				console.log("save button -- res:", res);
 				if (res["error"] != "")
 				{
@@ -428,6 +453,9 @@ if (window.location.href.includes("contacts.html"))
 			}
 
 		}
+		// bind search button to searchContact()
+		$("#searchButton").click(searchContact());
+
 
 		// add defaultContact rq for testing
 		defaultContact.clone().prependTo($('#contactsPane div:first'));
