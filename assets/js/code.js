@@ -211,6 +211,9 @@ if (window.location.href.includes("contacts.html"))
 		defaultContact = $($("#defaultContact").html());
 		console.log(blankContact);
 
+		// clear search bar
+		$("input#searchText").val("");
+
 		// function for grabbing contact JSON with all info addContact and editContact need.
 		// input: expects a jQuery object of a .contactRow <div>.
 		// returns: a JSON object.
