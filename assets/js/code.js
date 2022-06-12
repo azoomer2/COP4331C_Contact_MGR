@@ -407,7 +407,7 @@ if (window.location.href.includes("contacts.html"))
 		{
 			$("#contactsPane div.container:first").empty();
 			console.log("searchContact called");
-			let srch = document.getElementById("searchText").value;
+			let srch = $("#searchText").val();
 			document.getElementById("contactSearchResult").innerHTML = "";
 
 			let contactList = "";
