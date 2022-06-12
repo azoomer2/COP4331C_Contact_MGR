@@ -130,6 +130,7 @@ function editContact(jsonPayload)
 if (window.location.href.includes("contacts.html"))
 {
 	$(document).ready(function(){
+		readCookie();
 		blankContact = $($("#blankContact").html());
 		defaultContact = $($("#defaultContact").html());
 		console.log(blankContact);
@@ -284,12 +285,12 @@ if (window.location.href.includes("contacts.html"))
 			if (cRow.attr("editable") == 0) {
 				cRow.attr("editable", 1);
 				// make inputs all editable
-				cRow.children("input").prop("disabled", false);
+				cRow.find("input").prop("disabled", false);
 			}
 			else {
 				cRow.attr("editable", 0);
 				// disable all input boxes
-				cRow.children("input").prop("disabled", true);
+				cRow.find("input").prop("disabled", true);
 			}
 		}
 
