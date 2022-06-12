@@ -337,27 +337,27 @@ if (window.location.href.includes("contacts.html"))
 				toggleContactEdits(cRow);
 
 				// editContact() API call
-				let result
-				let res = await editContact(grabJSON(cRow)).then(result => {console.log("result:", result); console.log("result data:", result.data);});
-				console.log("save button -- res:", res.data);
-				if (JSON.parse()["error"] != "")
-				{
-					// TODO: finish this lol
-					console.log("editContact ERROR:", res);
-					toggleContactEdits(cRow); // turn edits back on
-				}
-				else
-				{
-					// TODO: finish this lol
-					console.log("editContact SUCCESS:");
+				let res = await editContact(grabJSON(cRow)).then(result => {
+					console.log("save button -- res:", result);
+					if result != "Contact edited successfully")
+					{
+						// TODO: finish this lol
+						console.log("editContact ERROR:", result);
+						toggleContactEdits(cRow); // turn edits back on
+					}
+					else
+					{
+						// TODO: finish this lol
+						console.log("editContact SUCCESS:");
 
-					// swap edit/info buttons with save/cancel buttons
-					cRow.find(".saveCancelGroup:first").hide();
-					cRow.find(".editInfoGroup:first").show();
+						// swap edit/info buttons with save/cancel buttons
+						cRow.find(".saveCancelGroup:first").hide();
+						cRow.find(".editInfoGroup:first").show();
 
-					// discard oldState
-					$(cRow).removeData('oldState');
-				}
+						// discard oldState
+						$(cRow).removeData('oldState');
+					}
+				});
 			});
 
 			// cancel button handler
