@@ -155,7 +155,7 @@ if (window.location.href.includes("contacts.html"))
 			tmp["UserID"] = userId; // for addContact
 			tmp["contactID"] = cRow.attr("contactID"); // for editContact
 
-			let res = JSON.parse( tmp ); // should be JSON.stringify() before sending off
+			let res = JSON.parse( JSON.stringify(tmp) ); // should be JSON.stringify() before sending off
 			console.log("grabJSON() -- grabbed", res);
 			return res;
 		}
