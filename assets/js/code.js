@@ -122,7 +122,7 @@ function doLogout()
 // sends API call with required JSON.
 // input: correct JSON structure.
 // returns: the POST results.
-async function editContact(jsonPayload)
+async function editContactOld(jsonPayload)
 {
 	let retval = {"error":"","success":""};
 	let url = urlBase + '/AddContact.' + extension;
@@ -171,14 +171,22 @@ async function editContact(jsonPayload)
 	return retval;
 }
 
-async function editContact2(jsonPayload)
+async function editContact(jsonPayload)
 {
+	let url = urlBase + '/AddContact.' + extension;
+	jsonPayload["ID"] = jsonPayload["contactID"]
+	jsonPayload = JSON.parse(jsonPayload);
+	console.log("editContact, jsonPayload:", jsonPayload);
+
 	return new Promise(function (resolve, reject) {
         let xhr = new XMLHttpRequest();
-        xhr.open(method, url);
+				xhr.open("POST", url);
+				xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
         xhr.onload = function () {
             if (this.status >= 200 && this.status < 300) {
-                resolve(xhr.response);
+							console.log("edit contact success!");
+							retval["success"] = "Contact has been edited";
+              resolve(xhr.response);
             } else {
                 reject({
                     status: this.status,
@@ -188,6 +196,7 @@ async function editContact2(jsonPayload)
         };
         xhr.onerror = function () {
             reject({
+							console.log("edit contact fail.");
                 status: this.status,
                 statusText: xhr.statusText
             });
