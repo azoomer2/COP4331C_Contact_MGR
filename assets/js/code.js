@@ -124,7 +124,7 @@ function doLogout()
 // returns: the POST results.
 function editContact(jsonPayload)
 {
-	let retval = {};
+	let retval = {"error":"","success":""};
 	let url = urlBase + '/AddContact.' + extension;
 	jsonPayload["ID"] = jsonPayload["contactID"]
 	jsonPayload = JSON.parse(jsonPayload);
@@ -137,6 +137,7 @@ function editContact(jsonPayload)
 	}
 	catch(err)
 	{
+		console.log("putting something in error:", err.message);
 		retval["error"] = err.message;
 		return retval;
 	}
@@ -154,6 +155,7 @@ function editContact(jsonPayload)
 	}
 	catch(err)
 	{
+		console.log("putting something in error:", err.message);
 		retval["error"] = err.message;
 		return retval;
 	}
