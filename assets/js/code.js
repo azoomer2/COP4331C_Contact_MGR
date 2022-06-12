@@ -195,8 +195,8 @@ async function editContact(jsonPayload)
             }
         };
         xhr.onerror = function () {
+						console.log("edit contact fail.");
             reject({
-							console.log("edit contact fail.");
                 status: this.status,
                 statusText: xhr.statusText
             });
