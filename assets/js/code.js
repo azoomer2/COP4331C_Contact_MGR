@@ -161,6 +161,7 @@ function editContact(jsonPayload)
 		return retval;
 	}
 
+	console.log("successful retval:", retval);
 	return retval;
 }
 
