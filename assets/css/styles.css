@@ -205,7 +205,6 @@ html, body {
 
 .text-danger {
   color: #fc0303;
-  -webkit-text-stroke: 1px white;
   -webkit-text-fill-color: #fc0303;
   font-weight: bold;
 }
