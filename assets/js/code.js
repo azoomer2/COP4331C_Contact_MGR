@@ -150,6 +150,8 @@ function editContact(jsonPayload)
 			{
 				console.log("success!");
 				retval["success"] = "Contact has been edited";
+				console.log("successful retval:", retval);
+				return retval;
 			}
 		};
 		xhr.send(jsonPayload);
@@ -160,9 +162,6 @@ function editContact(jsonPayload)
 		retval["error"] = err.message;
 		return retval;
 	}
-
-	console.log("successful retval:", retval);
-	return retval;
 }
 
 if (window.location.href.includes("contacts.html"))
