@@ -375,6 +375,7 @@ if (window.location.href.includes("contacts.html"))
 			// edit button handler
 			$(cRow).find(".contactEditButton:first").click(function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
+				cleanRowMessage(cRow);
 				console.log("edit time :)");
 				let editable = cRow.attr("editable");
 				console.log(editable);
@@ -441,6 +442,7 @@ if (window.location.href.includes("contacts.html"))
 			// cancel button handler
 			$(cRow).find(".cancelButton:first").click(function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
+				cleanRowMessage(cRow);
 				console.log("cancelling edits for", cRow);
 				// toggle editability
 				toggleContactEdits(cRow);
