@@ -544,7 +544,8 @@ if (window.location.href.includes("contacts.html"))
 				}
 
 				// deleteContact() API call
-				grabbed = JSON.parse({"ID":grabbed["ID"]});
+				let tmp = {"ID":grabbed["ID"]};
+				grabbed = JSON.parse(tmp);
 				let res = await deleteContact().then(result => {
 					console.log("delete button -- res:", result);
 					if (result.error != "")
@@ -580,6 +581,7 @@ if (window.location.href.includes("contacts.html"))
 				// disable all input boxes
 				cRow.find("input").prop("readonly", true);
 				cRow.find("select").prop("disabled", true);
+				cRow.find("input.deleteInput").prop("readonly", false);
 			}
 		}
 
