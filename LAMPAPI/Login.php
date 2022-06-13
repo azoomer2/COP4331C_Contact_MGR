@@ -23,7 +23,7 @@
 
 		if( $row = $result->fetch_assoc()  )
 		{
-			returnWithInfo($row['ID'], $row['FirstName'], $row['LastName']);
+			returnWithInfo($row['ID'], $row['Name'], $row['LastName']);
 		}
 		else
 		{

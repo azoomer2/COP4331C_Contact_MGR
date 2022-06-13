@@ -11,6 +11,9 @@
 	$Country = $inData["Country"];
  	$office = $inData["office"];
 	$UserID = $inData["UserID"];
+  
+  # $id = 0;
+  # $name = "";
 
 	$conn = new mysqli("localhost", "root", "cop43312", "COP4331");
 	if ($conn->connect_error)
@@ -36,10 +39,13 @@
 		$stmt = $conn->prepare("INSERT into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, office, UserID) VALUES(?,?,?,?,?,?,?,?,?,?)");
 		$stmt->bind_param("ssssssissi", $Name, $Phone, $email, $Street, $City, $State, $ZIP, $Country, $office, $UserID);
 		$stmt->execute();
-		$stmt->close();
-		$conn->close();
-		returnWithError("");
+		
+    returnWithInfo($row['ID'], $row['Name']);
+    
 		}
+   
+    $stmt->close();
+    $conn->close();
 	}
 
 	function getRequestInfo()
@@ -59,4 +65,9 @@
 		sendResultInfoAsJson( $retValue );
 	}
 
+	function returnWithInfo($id, $name)
+	{
+		$retValue = '{"id":' . $id . ',"Name":"' . $name . '","error":""}';
+		sendResultInfoAsJson( $retValue );
+	}
 ?>
