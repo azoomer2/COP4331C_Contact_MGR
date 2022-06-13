@@ -192,6 +192,69 @@ function doLogout()
 	window.location.href = "index.html";
 }
 
+// input: a parsed JSON object.
+async function addContact(jsonPayload)
+{
+	let url = urlBase + '/AddContact.' + extension;
+	console.log("addContact, jsonPayload:", jsonPayload);
+
+	return new Promise(function (resolve, reject) {
+        let xhr = new XMLHttpRequest();
+				xhr.open("POST", url);
+				xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        xhr.onload = function () {
+            if (this.status >= 200 && this.status < 300) {
+							console.log("add contact success!");              resolve(xhr.response);
+            } else {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            }
+        };
+        xhr.onerror = function () {
+						console.log("add contact fail.");
+            reject({
+                status: this.status,
+                statusText: xhr.statusText
+            });
+        };
+        xhr.send(JSON.stringify(jsonPayload));
+    });
+}
+
+// input: a parsed JSON object.
+async function deleteContact(jsonPayload)
+{
+	let url = urlBase + '/Delete.' + extension;
+	console.log("addContact, jsonPayload:", jsonPayload);
+
+	return new Promise(function (resolve, reject) {
+        let xhr = new XMLHttpRequest();
+				xhr.open("POST", url);
+				xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        xhr.onload = function () {
+            if (this.status >= 200 && this.status < 300) {
+							console.log("delete contact success!");
+              resolve(xhr.response);
+            } else {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            }
+        };
+        xhr.onerror = function () {
+						console.log("delete contact fail.");
+            reject({
+                status: this.status,
+                statusText: xhr.statusText
+            });
+        };
+        xhr.send(JSON.stringify(jsonPayload));
+    });
+}
+
 // sends API call with required JSON.
 // input: correct JSON structure.
 // returns: the POST results.
@@ -368,6 +431,8 @@ if (window.location.href.includes("contacts.html"))
 
 			// more/less info handler
 			$(cRow).find(".contactInfoButton:first").click(function () {
+				let cRow = $(this).parentsUntil("div .contactRow").parent();
+				cleanRowMessage(cRow);
 				console.log("more/less info");
 				var $el = $(this);
 				$el.children("label").text($el.children("label").text() == "More Info" ? "Less Info": "More Info");
@@ -407,7 +472,7 @@ if (window.location.href.includes("contacts.html"))
 				// first, make sure they're saving this contact with a name
 				if (cRow.find("input.nameInput").val() == "")
 				{
-					alert("ERRORß: Contacts need a name.");
+					alert("ERROR: Contacts need a name.");
 					return;
 				}
 				console.log("saving progress");
@@ -459,6 +524,43 @@ if (window.location.href.includes("contacts.html"))
 					console.log("cancel button ERROR:");
 					console.log(e);
 				}
+			});
+
+			// delete button handler
+			$(cRow).find(".deleteButton:first").click(async function () {
+				let cRow = $(this).parentsUntil("div .contactRow").parent();
+				cleanRowMessage(cRow);
+				// first, make sure they're saving this contact with a name
+				let grabbed = JSON.parse(grabJSON(cRow));
+				if (cRow.find("input.deleteInput").val() != grabbed["Name"])
+				{
+					alert("ERROR: typed name doesn't match contact name.");
+					return;
+				}
+				console.log("deleting contact! Name:", grabbed["Name"]);
+				// toggle edits if necessary
+				if (cRow.attr("editable") == 1){
+					toggleContactEdits(cRow);
+				}
+
+				// deleteContact() API call
+				grabbed = JSON.parse({"ID":grabbed["ID"]});
+				let res = await deleteContact().then(result => {
+					console.log("delete button -- res:", result);
+					if (result.error != "")
+					{
+						// TODO: finish this lol
+						console.log("deleteContact ERROR:", result);
+						failureMessage(cRow, "Error: could not delete contact. Please try again.");
+					}
+					else
+					{
+						// TODO: finish this lol
+						console.log("deleteContact SUCCESS:");
+						cRow.remove();
+					}
+				});
+
 			});
 		}
 
@@ -599,8 +701,6 @@ if (window.location.href.includes("contacts.html"))
 					{
 						// TODO: finish this lol
 						console.log("save new contact SUCCESS:");
-						successMessage(cRow, "Success...");
-
 						// replace this cRow with a filled in defaultContact
 						// make new cRow
 						let tempContact = defaultContact.clone();
@@ -612,6 +712,9 @@ if (window.location.href.includes("contacts.html"))
 						putJSON(tempContact, newJSON);
 						// finish functionality and prepend to contactsPane
 						prepareCRow(tempContact);
+						let inf = $(this).parent().children(".contactInfoButton");
+						inf.trigger('click');
+						successMessage(tempContact, "Success...");
 						tempContact.prependTo($('#contactsPane div:first'));
 
 						// get rid of old blankContact
@@ -631,36 +734,7 @@ if (window.location.href.includes("contacts.html"))
 	});
 }
 
-// input: a parsed JSON object.
-async function addContact(jsonPayload)
-{
-	let url = urlBase + '/AddContact.' + extension;
-	console.log("addContact, jsonPayload:", jsonPayload);
 
-	return new Promise(function (resolve, reject) {
-        let xhr = new XMLHttpRequest();
-				xhr.open("POST", url);
-				xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-        xhr.onload = function () {
-            if (this.status >= 200 && this.status < 300) {
-							console.log("add contact success!");              resolve(xhr.response);
-            } else {
-                reject({
-                    status: this.status,
-                    statusText: xhr.statusText
-                });
-            }
-        };
-        xhr.onerror = function () {
-						console.log("add contact fail.");
-            reject({
-                status: this.status,
-                statusText: xhr.statusText
-            });
-        };
-        xhr.send(JSON.stringify(jsonPayload));
-    });
-}
 
 // function newContact()
 // {
