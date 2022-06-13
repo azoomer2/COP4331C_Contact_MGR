@@ -205,7 +205,13 @@ html, body {
 
 .text-danger {
   color: #fc0303;
-  -webkit-text-fill-color: #fc0303;
+  /*-webkit-text-fill-color: #fc0303;*/
+  font-weight: bold;
+}
+
+.text-success {
+  color: lime;
+  /*-webkit-text-fill-color: lime;*/
   font-weight: bold;
 }
 
@@ -241,4 +247,3 @@ html, body {
     font-size: 30px;
   }
 }
-

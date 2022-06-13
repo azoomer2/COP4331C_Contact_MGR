@@ -7,6 +7,24 @@ let lastName = "";
 var blankContact;
 var defaultContact;
 
+function cleanRowMessage(cRow)
+{
+	cRow.find("p.contactChangeResult").removeClass("text-success text-danger");
+}
+
+
+function successMessage(cRow, msg)
+{
+	cRow.find("p.contactChangeResult").text(msg);
+	cRow.find("p.contactChangeResult").removeClass("text-danger").addClass("text-success");
+}
+
+function failureMessage(cRow, msg)
+{
+	cRow.find("p.contactChangeResult").text(msg);
+	cRow.find("p.contactChangeResult").removeClass("text-success").addClass("text-danger");
+}
+
 function doRegister()
 {
 	let login = document.getElementById("signUpName").value;
@@ -383,6 +401,7 @@ if (window.location.href.includes("contacts.html"))
 			// save button handler
 			$(cRow).find(".saveButton:first").click(async function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
+				cleanRowMessage(cRow);
 				// first, make sure they're saving this contact with a name
 				if (cRow.find("input.nameInput").val() == "")
 				{
@@ -400,12 +419,14 @@ if (window.location.href.includes("contacts.html"))
 					{
 						// TODO: finish this lol
 						console.log("editContact ERROR:", result);
+						failureMessage(cRow, "Error: could not edit contact. Please try again.");
 						toggleContactEdits(cRow); // turn edits back on
 					}
 					else
 					{
 						// TODO: finish this lol
 						console.log("editContact SUCCESS:");
+						successMessage(cRow, "Contact edited successfully!");
 
 						// swap edit/info buttons with save/cancel buttons
 						cRow.find(".saveCancelGroup:first").hide();
@@ -481,6 +502,7 @@ if (window.location.href.includes("contacts.html"))
 			catch(err)
 			{
 				document.getElementById("contactSearchResult").innerHTML = err.message;
+				$("#contactSearchResult").removeClass("text-success").addClass("text-danger");
 			}
 			try
 			{
@@ -489,6 +511,7 @@ if (window.location.href.includes("contacts.html"))
 					if (this.readyState == 4 && this.status == 200)
 					{
 						document.getElementById("contactSearchResult").innerHTML = "Contacts have been retrieved";
+						$("#contactSearchResult").removeClass("text-danger").addClass("text-success");
 						let jsonObject = JSON.parse( xhr.responseText );
 						console.log("jsonObject:", jsonObject);
 
@@ -510,6 +533,7 @@ if (window.location.href.includes("contacts.html"))
 					}
 					else {
 						document.getElementById("contactSearchResult").innerHTML = "Something has gone wrong";
+						$("#contactSearchResult").removeClass("text-success").addClass("text-danger");
 					}
 				};
 				xhr.send(jsonPayload);
@@ -517,6 +541,7 @@ if (window.location.href.includes("contacts.html"))
 			catch(err)
 			{
 				document.getElementById("contactSearchResult").innerHTML = err.message;
+				$("#contactSearchResult").removeClass("text-success").addClass("text-danger");
 			}
 
 		}
@@ -556,6 +581,7 @@ if (window.location.href.includes("contacts.html"))
 			// save button
 			$('#contactsPane div:first .contactRow:first .saveButton:first').click(async function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
+				cleanRowMessage(cRow);
 				console.log("save button clicked!");
 				console.log(grabJSON(cRow));
 
@@ -570,7 +596,7 @@ if (window.location.href.includes("contacts.html"))
 					{
 						// TODO: finish this lol
 						console.log("save new contact SUCCESS:");
-						cRow.find(".contactAddResult").text("Success...");
+						successMessage(cRow, "Success...");
 
 						// replace this cRow with a filled in defaultContact
 						// make new cRow
@@ -591,7 +617,7 @@ if (window.location.href.includes("contacts.html"))
 					else
 					{
 						// TODO: finish this lol
-						cRow.find(".contactAddResult").text("Try again");
+						failureMessage(cRow, "Error adding contact, please try again!");
 						console.log("save new contact ERROR:", result);
 						toggleContactEdits(cRow); // turn edits back on
 					}
