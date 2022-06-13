@@ -565,6 +565,7 @@ if (window.location.href.includes("contacts.html"))
 				await addContact(newJSON).then(result => {
 					console.log("addContact result:", result);
 					let retrievedID = parseInt(JSON.parse(result)["ID"]);
+					console.log("retrievedID:", retrievedID);
 					if (retrievedID > 0)
 					{
 						// TODO: finish this lol
