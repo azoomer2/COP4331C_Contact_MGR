@@ -545,8 +545,8 @@ if (window.location.href.includes("contacts.html"))
 
 				// deleteContact() API call
 				let tmp = {"ID":grabbed["contactID"]};
-				console.log("deleteContact starting up -- unfinished payload:", grabbed);
-				grabbed = JSON.parse(tmp);
+				console.log("deleteContact starting up -- unfinished payload:", tmp);
+				let grabbed = JSON.parse(tmp);
 				console.log("deleteContact starting up -- finished payload:", grabbed);
 				let res = await deleteContact().then(result => {
 					console.log("delete button -- res:", result);
