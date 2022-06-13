@@ -602,10 +602,10 @@ if (window.location.href.includes("contacts.html"))
 	});
 }
 
+// input: a parsed JSON object.
 async function addContact(jsonPayload)
 {
 	let url = urlBase + '/AddContact.' + extension;
-	jsonPayload = JSON.parse(jsonPayload);
 	console.log("addContact, jsonPayload:", jsonPayload);
 
 	return new Promise(function (resolve, reject) {
