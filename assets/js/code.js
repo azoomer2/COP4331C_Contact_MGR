@@ -564,14 +564,7 @@ if (window.location.href.includes("contacts.html"))
 				let newJSON = grabJSON(cRow);
 				await addContact(newJSON).then(result => {
 					console.log("addContact result:", result);
-					if (result != "Contact added successfully")
-					{
-						// TODO: finish this lol
-						cRow.find(".contactAddResult").text("Try again");
-						console.log("addContact ERROR:", result);
-						toggleContactEdits(cRow); // turn edits back on
-					}
-					else
+					if (result["ID"] > 0)
 					{
 						// TODO: finish this lol
 						console.log("addContact SUCCESS:");
@@ -581,7 +574,7 @@ if (window.location.href.includes("contacts.html"))
 						// make new cRow
 						let tempContact = defaultContact.clone();
 						// fill with info
-						newJSON["contactID"] = newJSON["ID"];
+						newJSON["contactID"] = result["ID"];
 						console.log("newJSON for replacement cRow:", newJSON);
 						tempContact.attr("idInitialized", "false");
 						putJSON(tempContact, newJSON);
@@ -592,6 +585,14 @@ if (window.location.href.includes("contacts.html"))
 						// get rid of old blankContact
 						cRow.remove();
 					}
+					else
+					{
+						// TODO: finish this lol
+						cRow.find(".contactAddResult").text("Try again");
+						console.log("addContact ERROR:", result);
+						toggleContactEdits(cRow); // turn edits back on
+					}
+
 				});
 			});
 		})
