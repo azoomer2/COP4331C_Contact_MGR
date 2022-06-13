@@ -270,7 +270,7 @@ if (window.location.href.includes("contacts.html"))
 
 		// function for grabbing contact JSON with all info addContact and editContact need.
 		// input: expects a jQuery object of a .contactRow <div>.
-		// returns: a JSON object.
+		// returns: a JSON string.
 		function grabJSON(cRow)
 		{
 			// XSS vulnerable.
@@ -561,7 +561,7 @@ if (window.location.href.includes("contacts.html"))
 
 				// toggle edits and send API call!
 				toggleContactEdits(cRow);
-				let newJSON = grabJSON(cRow);
+				let newJSON = JSON.parse(grabJSON(cRow));
 				await addContact(newJSON).then(result => {
 					console.log("addContact result:", result);
 					let retrievedID = parseInt(JSON.parse(result)["ID"]);
