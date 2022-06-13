@@ -7,6 +7,60 @@ let lastName = "";
 var blankContact;
 var defaultContact;
 
+function doRegister()
+{
+	let login = document.getElementById("signUpName").value;
+	let password = document.getElementById("signUpPassword").value;
+	let firstName = document.getElementById("firstName").value;
+	let lastName = document.getElementById("lastName").value;
+//	var hash = md5( password );
+
+	document.getElementById("registerResult").innerHTML = "";
+
+	let tmp = {Login:login,Password:password,FirstName:firstName,LastName:lastName};
+//	var tmp = {Login:login,Password:hash};
+	let jsonPayload = JSON.stringify( tmp );
+
+	let url = 'LAMPAPI/Register.' + extension;
+	console.log(url);
+	let xhr = new XMLHttpRequest();
+	try
+	{
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	}
+	catch(err)
+	{
+		document.getElementById("registerResult").innerHTML = err.message;
+	}
+	try
+	{
+		xhr.onreadystatechange = function()
+		{
+			if (this.readyState == 4 && this.status == 200)
+			{
+				let jsonObject = JSON.parse( xhr.responseText );
+				userId = jsonObject.id;
+				console.log("jsonObject: ", jsonObject, "\nuserID:", userId);
+				if( userId < 1 )
+				{
+					document.getElementById("registerResult").innerHTML = "User already exists";
+					return;
+				}
+
+				saveCookie();
+				console.log("cookie saved");
+				window.location.href = "index.html";
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("registerResult").innerHTML = err.message;
+	}
+}
+
 function doLogin()
 {
 	userId = 0;
