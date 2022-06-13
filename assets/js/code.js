@@ -37,7 +37,7 @@ function doRegister()
 	document.getElementById("registerResult").innerHTML = "";
 
 	let tmp = {Login:login,Password:password,FirstName:firstName,LastName:lastName};
-	let tmp = {Login:login,Password:hash,FirstName:firstName,LastName:lastName};
+	tmp = {Login:login,Password:hash,FirstName:firstName,LastName:lastName};
 	let jsonPayload = JSON.stringify( tmp );
 
 	let url = 'LAMPAPI/Register.' + extension;
