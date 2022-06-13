@@ -32,12 +32,12 @@ function doRegister()
 	let password = document.getElementById("signUpPassword").value;
 	let firstName = document.getElementById("firstName").value;
 	let lastName = document.getElementById("lastName").value;
-//	var hash = md5( password );
+	let hash = md5( password );
 
 	document.getElementById("registerResult").innerHTML = "";
 
 	let tmp = {Login:login,Password:password,FirstName:firstName,LastName:lastName};
-//	var tmp = {Login:login,Password:hash};
+	let tmp = {Login:login,Password:hash,FirstName:firstName,LastName:lastName};
 	let jsonPayload = JSON.stringify( tmp );
 
 	let url = 'LAMPAPI/Register.' + extension;
@@ -88,12 +88,12 @@ function doLogin()
 
 	let login = document.getElementById("loginName").value;
 	let password = document.getElementById("loginPassword").value;
-//	var hash = md5( password );
+	let hash = md5( password );
 
 	document.getElementById("loginResult").innerHTML = "";
 
 	let tmp = {login:login,password:password};
-//	var tmp = {login:login,password:hash};
+	tmp = {login:login,password:hash};
 	let jsonPayload = JSON.stringify( tmp );
 
 	//let url = urlBase + '/LAMPAPI/Login.' + extension;
@@ -227,7 +227,7 @@ async function addContact(jsonPayload)
 async function deleteContact(jsonPayload)
 {
 	let url = urlBase + '/Delete.' + extension;
-	console.log("addContact, jsonPayload:", jsonPayload);
+	console.log("deleteContact, jsonPayload:", jsonPayload);
 
 	return new Promise(function (resolve, reject) {
         let xhr = new XMLHttpRequest();
@@ -693,6 +693,13 @@ if (window.location.href.includes("contacts.html"))
 				cleanRowMessage(cRow);
 				console.log("save button clicked!");
 				console.log(grabJSON(cRow));
+
+				// first, make sure they're saving this contact with a name
+				if (cRow.find("input.nameInput").val() == "")
+				{
+					alert("ERROR: Contacts need a name.");
+					return;
+				}
 
 				// toggle edits and send API call!
 				toggleContactEdits(cRow);
