@@ -10,6 +10,7 @@ var defaultContact;
 function cleanRowMessage(cRow)
 {
 	cRow.find("p.contactChangeResult").removeClass("text-success text-danger");
+	cRow.find("p.contactChangeResult").text("");
 }
 
 
