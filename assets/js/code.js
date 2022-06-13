@@ -548,7 +548,7 @@ if (window.location.href.includes("contacts.html"))
 				console.log("deleteContact starting up -- unfinished payload:", tmp);
 				grabbed = JSON.parse( JSON.stringify(tmp) );
 				console.log("deleteContact starting up -- finished payload:", grabbed);
-				let res = await deleteContact().then(result => {
+				let res = await deleteContact(grabbed).then(result => {
 					console.log("delete button -- res:", result);
 					if (result["error"] != "")
 					{
