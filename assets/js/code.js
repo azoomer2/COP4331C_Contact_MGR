@@ -550,7 +550,7 @@ if (window.location.href.includes("contacts.html"))
 				console.log("deleteContact starting up -- finished payload:", grabbed);
 				let res = await deleteContact().then(result => {
 					console.log("delete button -- res:", result);
-					if (result.error != "")
+					if (result["error"] != "")
 					{
 						// TODO: finish this lol
 						console.log("deleteContact ERROR:", result);
