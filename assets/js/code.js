@@ -634,4 +634,3 @@ async function addContact(jsonPayload)
 // 	console.log("newContact called");
 // 	$('contactsPane').prepend(blankContact.clone());
 // }
-//Hey dude

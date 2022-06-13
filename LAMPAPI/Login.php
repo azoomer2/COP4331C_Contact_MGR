@@ -23,7 +23,7 @@
 
 		if( $row = $result->fetch_assoc()  )
 		{
-			returnWithInfo($row['ID'], $row['Name'], $row['LastName']);
+			returnWithInfo($row['ID'], $row['FirstName'], $row['LastName']);
 		}
 		else
 		{
@@ -56,5 +56,4 @@
 		$retValue = '{"id":' . $id . ',"FirstName":"' . $firstName . '","LastName":"' . $lastName . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
-
 ?>

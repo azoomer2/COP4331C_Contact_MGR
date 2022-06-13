@@ -24,7 +24,7 @@
 	{
 		# Check if contact is already on the database
 		$stmt = $conn->prepare("SELECT Name FROM Contacts WHERE(Phone=? OR email=?) AND (UserID=?)");
-		$stmt->bind_param("isi", $Phone,$email, $UserID);
+		$stmt->bind_param("ssi", $Phone,$email, $UserID);
 		$stmt->execute();
 		$result = $stmt->get_result();
 
@@ -36,12 +36,20 @@
 		# Insert contact
 		else
 		{
-		$stmt = $conn->prepare("INSERT into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, office, UserID) VALUES(?,?,?,?,?,?,?,?,?,?)");
-		$stmt->bind_param("ssssssissi", $Name, $Phone, $email, $Street, $City, $State, $ZIP, $Country, $office, $UserID);
-		$stmt->execute();
-		
-    returnWithInfo($row['ID'], $row['Name']);
-    
+  		$stmt = $conn->prepare("INSERT into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, office, UserID) VALUES(?,?,?,?,?,?,?,?,?,?)");
+  		$stmt->bind_param("ssssssissi", $Name, $Phone, $email, $Street, $City, $State, $ZIP, $Country, $office, $UserID);
+  		$stmt->execute();
+      $result = $stmt->get_result();
+      
+      $stmt = $conn->prepare("SELECT ID FROM Contacts WHERE Name=? AND UserID=?");
+  		$stmt->bind_param("si", $Name, $UserID);
+  		$stmt->execute();
+  		$result = $stmt->get_result();
+      
+  		if( $row = $result->fetch_assoc()  )
+  		{
+  			    returnWithInfo($row['ID']);
+  		}    
 		}
    
     $stmt->close();
@@ -65,9 +73,9 @@
 		sendResultInfoAsJson( $retValue );
 	}
 
-	function returnWithInfo($id, $name)
+	function returnWithInfo($id)
 	{
-		$retValue = '{"id":' . $id . ',"Name":"' . $name . '","error":""}';
+		$retValue = '{"ID":' . $id . ',"error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 ?>
