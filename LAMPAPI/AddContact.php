@@ -11,9 +11,6 @@
 	$Country = $inData["Country"];
  	$office = $inData["office"];
 	$UserID = $inData["UserID"];
-  
-  # $id = 0;
-  # $name = "";
 
 	$conn = new mysqli("localhost", "root", "cop43312", "COP4331");
 	if ($conn->connect_error)
@@ -40,7 +37,7 @@
   		$stmt->bind_param("ssssssissi", $Name, $Phone, $email, $Street, $City, $State, $ZIP, $Country, $office, $UserID);
   		$stmt->execute();
       $result = $stmt->get_result();
-      
+
       $stmt = $conn->prepare("SELECT ID FROM Contacts WHERE Name=? AND UserID=?");
   		$stmt->bind_param("si", $Name, $UserID);
   		$stmt->execute();
@@ -49,9 +46,9 @@
   		if( $row = $result->fetch_assoc()  )
   		{
   			    returnWithInfo($row['ID']);
-  		}    
+  		}
 		}
-   
+
     $stmt->close();
     $conn->close();
 	}
