@@ -734,7 +734,7 @@ if (window.location.href.includes("contacts.html"))
 					else
 					{
 						// TODO: finish this lol
-						failureMessage(cRow, "Error adding contact, please try again!");
+						failureMessage(cRow, "Error adding contact. Please try again!");
 						console.log("save new contact ERROR:", result);
 						toggleContactEdits(cRow); // turn edits back on
 					}
@@ -746,9 +746,3 @@ if (window.location.href.includes("contacts.html"))
 }
 
 
-
-// function newContact()
-// {
-// 	console.log("newContact called");
-// 	$('contactsPane').prepend(blankContact.clone());
-// }
