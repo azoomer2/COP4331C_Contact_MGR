@@ -633,6 +633,7 @@ if (window.location.href.includes("contacts.html"))
 				{
 					if (this.readyState == 4 && this.status == 200)
 					{
+						document.getElementById("contactSearchResult").innerHTML = "";
 						$("#contactSearchResult").removeClass("text-danger").addClass("text-success");
 						let jsonObject = JSON.parse( xhr.responseText );
 						console.log("jsonObject:", jsonObject);
