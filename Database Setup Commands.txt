@@ -60,3 +60,17 @@ insert into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, Use
 insert into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, UserID) VALUES ('Patrick', '623-456-7890', 'patrik@gmail.com', '623 street street', 'Clean City', 'NY' , '08085', 'United States', 3);
 insert into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, UserID) VALUES ('Edward', '723-456-7890', 'edward@gmail.com', '723 street street', 'Squid City', 'NY' , '08086', 'United States', 3);
 insert into Contacts (Name, Phone, email, Street, City, State, ZIP, Country, UserID) VALUES ('Eugine', '823-456-7890', 'eugine@gmail.com', '823 street street', 'Krusty Krab', 'NY' , '08087', 'United States', 3);
+
+
+Before Insert Trigger on Contacts Table to Prevent ID Gaps
+----------------------------------------------------------
+
+delimiter //
+CREATE TRIGGER Contacts_bi BEFORE INSERT
+ON Contacts
+FOR EACH ROW
+BEGIN
+set new.ID = (select MAX(ID) from Contacts) + 1;
+END
+//
+delimiter ;
