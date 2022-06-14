@@ -40,6 +40,7 @@ function doRegister()
 		document.getElementById("registerResult").innerHTML = "Error: Passwords do not match";
 		return;
 	}
+
 	document.getElementById("registerResult").innerHTML = "";
 
 	let tmp = {Login:login,Password:password,FirstName:firstName,LastName:lastName};
@@ -793,10 +794,3 @@ else if (window.location.href.includes("register.html"))
 		});
 	});
 }
-
-
-// function newContact()
-// {
-// 	console.log("newContact called");
-// 	$('contactsPane').prepend(blankContact.clone());
-// }
