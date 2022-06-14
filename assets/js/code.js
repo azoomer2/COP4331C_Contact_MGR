@@ -479,7 +479,7 @@ if (window.location.href.includes("contacts.html"))
 				// first, make sure they're saving this contact with a name
 				if (cRow.find("input.nameInput").val() == "")
 				{
-					alert("ERROR: Contacts need a name.");
+					failureMessage(cRow, "ERROR: Contacts need a name.");
 					return;
 				}
 				console.log("saving progress");
@@ -717,7 +717,7 @@ if (window.location.href.includes("contacts.html"))
 				// first, make sure they're saving this contact with a name
 				if (cRow.find("input.nameInput").val() == "")
 				{
-					alert("ERROR: Contacts need a name.");
+					failureMessage(cRow, "ERROR: Contacts need a name.");
 					return;
 				}
 
