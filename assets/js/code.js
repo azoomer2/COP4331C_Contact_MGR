@@ -370,7 +370,7 @@ if (window.location.href.includes("contacts.html"))
 			tmp["Street"] = cRow.find("input.streetInput").val();
 			tmp["City"] = cRow.find("input.cityInput").val();
 			tmp["State"] = cRow.find("select.stateInput option:selected").text();
-			tmp["ZIP"] = parseInt(cRow.find("input.zipInput").val());
+			tmp["ZIP"] = cRow.find("input.zipInput").val();
 			tmp["Country"] = cRow.find("select.countryInput option:selected").text();
 			tmp["office"] = cRow.find("input.officeInput").val();
 			// stuff to prune later :)
