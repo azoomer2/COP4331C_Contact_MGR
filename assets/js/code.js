@@ -269,7 +269,7 @@ async function editContactOld(jsonPayload)
 {
 	let retval = {"error":"","success":""};
 	let url = urlBase + '/AddContact.' + extension;
-	jsonPayload["ID"] = jsonPayload["contactID"]
+	jsonPayload["ID"] = parseInt(jsonPayload["contactID"]);
 	jsonPayload = JSON.parse(jsonPayload);
 
 	console.log("editContact, jsonPayload:", jsonPayload);
@@ -318,7 +318,7 @@ async function editContact(jsonPayload)
 {
 	let url = urlBase + '/EditContact.' + extension;
 	jsonPayload = JSON.parse(jsonPayload);
-	jsonPayload["ID"] = jsonPayload["contactID"];
+	jsonPayload["ID"] = parseInt(jsonPayload["contactID"]);
 	console.log("editContact, jsonPayload:", jsonPayload);
 
 	return new Promise(function (resolve, reject) {
@@ -737,7 +737,7 @@ if (window.location.href.includes("contacts.html"))
 						let tempContact = defaultContact.clone();
 						// fill with info
 						newJSON["contactID"] = retrievedID;
-						newJSON["ID"] = retrievedID;
+						newJSON["ID"] = (retrievedID);
 						console.log("newJSON for replacement cRow:", newJSON);
 						tempContact.attr("idInitialized", "false");
 						putJSON(tempContact, newJSON);
