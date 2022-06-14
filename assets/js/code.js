@@ -30,9 +30,16 @@ function doRegister()
 {
 	let login = document.getElementById("signUpName").value;
 	let password = document.getElementById("signUpPassword").value;
+	let confirm = document.getElementById("passwordConfirmation").value;
 	let firstName = document.getElementById("firstName").value;
 	let lastName = document.getElementById("lastName").value;
 	let hash = md5( password );
+
+	if (password != confirm)
+	{
+		document.getElementById("registerResult").innerHTML = "Error: Passwords do not match";
+		return;
+	}
 
 	document.getElementById("registerResult").innerHTML = "";
 
@@ -526,6 +533,13 @@ if (window.location.href.includes("contacts.html"))
 				}
 			});
 
+			// delete textbox enter key pressed: trigger deletion :)
+			$(cRow).find(".deleteInput:first").keyup(function(event) {
+		    if (event.keyCode === 13) {
+		        $(cRow).find(".deleteButton:first").click();
+		    }
+			});
+
 			// delete button handler
 			$(cRow).find(".deleteButton:first").click(async function () {
 				let cRow = $(this).parentsUntil("div .contactRow").parent();
@@ -554,7 +568,7 @@ if (window.location.href.includes("contacts.html"))
 					{
 						// TODO: finish this lol
 						console.log("deleteContact ERROR:", result);
-						failureMessage(cRow, "Error: could not delete contact. Please try again.");
+						failureMessage(cRow, "Could not delete. Please try again.");
 					}
 					else
 					{
@@ -619,7 +633,7 @@ if (window.location.href.includes("contacts.html"))
 				{
 					if (this.readyState == 4 && this.status == 200)
 					{
-						document.getElementById("contactSearchResult").innerHTML = "Contacts have been retrieved";
+						document.getElementById("contactSearchResult").innerHTML = "";
 						$("#contactSearchResult").removeClass("text-danger").addClass("text-success");
 						let jsonObject = JSON.parse( xhr.responseText );
 						console.log("jsonObject:", jsonObject);
@@ -658,6 +672,12 @@ if (window.location.href.includes("contacts.html"))
 		// bind search button to searchContact()
 		$("#searchButton:first").click(function () {
 			searchContact();
+		});
+		// if pressing enter in search bar, search!
+		$("#searchText").keyup(function(event) {
+	    if (event.keyCode === 13) {
+	        $("#searchButton").click();
+	    }
 		});
 
 
@@ -734,7 +754,15 @@ if (window.location.href.includes("contacts.html"))
 					else
 					{
 						// TODO: finish this lol
-						failureMessage(cRow, "Error adding contact. Please try again!");
+						let error=JSON.parse(result)["error"];
+						if (error == "")
+						{
+							failureMessage(cRow, "Error adding contact, please try again!");
+						}
+						else
+						{
+							failureMessage(cRow, error);
+						}
 						console.log("save new contact ERROR:", result);
 						toggleContactEdits(cRow); // turn edits back on
 					}
@@ -744,5 +772,25 @@ if (window.location.href.includes("contacts.html"))
 		})
 	});
 }
-
-
+else if (window.location.href.includes("login.html"))
+{
+	$(document).ready(function(){
+		// if pressing enter in username or password box, attempt login.
+		$("input").keyup(function(event) {
+	    if (event.keyCode === 13) {
+	        $("#loginButton").click();
+	    }
+		});
+	});
+}
+else if (window.location.href.includes("register.html"))
+{
+	$(document).ready(function(){
+		// if pressing enter in an input box, attempt register.
+		$("input").keyup(function(event) {
+	    if (event.keyCode === 13) {
+	        $("#registerButton").click();
+	    }
+		});
+	});
+}
